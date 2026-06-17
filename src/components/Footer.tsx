@@ -1,202 +1,179 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Phone, Github, Linkedin, Heart, ArrowUp } from 'lucide-react';
+import { Github, Linkedin, Mail, Globe, ArrowUp } from 'lucide-react';
+import { SiLeetcode } from 'react-icons/si';
 
-const Footer: React.FC = () => {
+interface FooterProps {
+  onTabChange?: (id: string) => void;
+}
+
+const Footer: React.FC<FooterProps> = ({ onTabChange }) => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const socialLinks = [
-    {
-      name: 'Email',
-      href: 'mailto:umariq.cse@gmail.com',
-      icon: <Mail size={20} />,
-      color: 'hover:text-red-400'
-    },
-    {
-      name: 'Phone',
-      href: 'tel:+917906732247',
-      icon: <Phone size={20} />,
-      color: 'hover:text-green-400'
-    },
-    {
-      name: 'GitHub',
-      href: 'https://github.com/UmarIqbal000',
-      icon: <Github size={20} />,
-      color: 'hover:text-white'
-    },
-    {
-      name: 'LinkedIn',
-      href: 'https://www.linkedin.com/in/umariqbal000/',
-      icon: <Linkedin size={20} />,
-      color: 'hover:text-blue-400'
-    }
-  ];
-
-  const quickLinks = [
-    { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Experience', href: '#experience' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Contact', href: '#contact' }
+  const navLinks = [
+    { id: 'education', label: 'Education' },
+    { id: 'skills', label: 'Skills' },
+    { id: 'experience', label: 'Experience' },
+    { id: 'leadership', label: 'Leadership' },
+    { id: 'projects', label: 'Projects' },
+    { id: 'certifications', label: 'Certifications' },
+    { id: 'achievements', label: 'Achievements' },
+    { id: 'linkedin', label: 'LinkedIn' },
   ];
 
   return (
-    <footer id="contact" className="relative pt-20 pb-10 overflow-hidden">
-      <div className="absolute inset-0 bg-deep-space z-0" />
-      <div className="absolute inset-0 bg-grid-pattern opacity-[0.05] z-0" />
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-neon-cyan to-transparent opacity-50" />
-      
-      <div className="max-w-6xl mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
-          {/* Brand Section */}
-          <div className="lg:col-span-2">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <h3 className="text-3xl font-bold mb-4 font-heading text-white">
-                Umar <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-electric-purple">Iqbal</span>
+    <footer className="relative bg-[#09090B] text-white border-t border-[#262627] mt-auto overflow-hidden">
+      {/* Subtle bottom-right purple ambient glow */}
+      <div className="absolute bottom-[-100px] right-[-100px] w-[350px] h-[350px] rounded-full bg-brand-violet/5 blur-[100px] pointer-events-none -z-10" />
+      {/* Subtle bottom-left orange ambient glow */}
+      <div className="absolute bottom-[-100px] left-[-100px] w-[250px] h-[250px] rounded-full bg-brand-orange/3 blur-[90px] pointer-events-none -z-10" />
+
+      {/* Elegant gradient accent line */}
+      <div className="h-[2px] w-full bg-gradient-to-r from-brand-violet/80 via-brand-pink/80 to-brand-orange/80" />
+
+      <div className="max-w-7xl mx-auto px-6 md:px-8 py-16 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-12 pb-12 border-b border-[#262627]">
+          
+          {/* Column 1: Bio & Details (Span 5) */}
+          <div className="md:col-span-5 flex flex-col justify-between">
+            <div>
+              <h3 className="text-2xl font-extrabold font-heading mb-3 tracking-tight">
+                Umar <span className="text-gradient font-black">Iqbal</span>
               </h3>
-              <p className="text-xl text-gray-300 mb-6 leading-relaxed italic">
-                "Building the future, one line of code at a time."
+              <p className="text-gray-300 text-sm font-heading font-semibold mb-4">
+                Data Scientist & AI Researcher | Full-Stack Developer | Founder
               </p>
-              <p className="text-gray-400 mb-6 leading-relaxed">
-                A passionate Full Stack Developer and AI enthusiast dedicated to creating 
-                innovative solutions and contributing to the tech community. Always eager to 
-                learn, grow, and make a positive impact through technology.
+              <p className="text-gray-400 text-sm leading-relaxed max-w-sm">
+                Designing and building high-performance AI solutions, robust full-stack applications, and engaging digital products.
               </p>
-              <div className="flex items-center gap-2 text-gray-400 bg-white/5 px-4 py-2 rounded-full w-fit border border-white/5">
-                <span>Made with</span>
-                <Heart size={16} className="text-red-500 fill-red-500 animate-pulse" />
-                <span>by Umar Iqbal</span>
-              </div>
-            </motion.div>
+            </div>
+            <p className="text-gray-500 text-xs font-heading mt-6 md:mt-0">
+              © {new Date().getFullYear()} Umar Iqbal. All rights reserved.
+            </p>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.1 }}
-            >
-              <h4 className="text-lg font-bold text-white mb-6 font-heading">Quick Links</h4>
-              <ul className="space-y-3">
-                {quickLinks.map((link, index) => (
-                  <li key={index}>
-                    <a
-                      href={link.href}
-                      className="text-gray-400 hover:text-neon-cyan transition-colors duration-200 flex items-center gap-2 group"
-                    >
-                      <span className="w-1.5 h-1.5 rounded-full bg-electric-purple group-hover:bg-neon-cyan transition-colors" />
-                      {link.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
+          {/* Column 2: Navigation Links (Span 3) */}
+          <div className="md:col-span-3">
+            <h4 className="text-xs font-bold font-heading text-gray-400 uppercase tracking-widest mb-6">
+              Navigation
+            </h4>
+            <div className="grid grid-cols-2 gap-y-3 gap-x-4">
+              {navLinks.map((link) => (
+                <button
+                  key={link.id}
+                  onClick={() => {
+                    onTabChange?.(link.id);
+                    // Smoothly scroll to the navigation bar after switching tabs
+                    const tabElement = document.getElementById('tab-navigation-bar');
+                    if (tabElement) {
+                      tabElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                  }}
+                  className="text-gray-400 hover:text-white text-sm font-medium transition-colors text-left outline-none"
+                >
+                  {link.label}
+                </button>
+              ))}
+            </div>
           </div>
 
-          {/* Contact Info */}
-          <div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-            >
-              <h4 className="text-lg font-bold text-white mb-6 font-heading">Get In Touch</h4>
-              <div className="space-y-4">
-                <div className="group">
-                  <p className="text-gray-500 text-xs uppercase tracking-wider mb-1">Primary Email</p>
-                  <a
-                    href="mailto:umariq.cse@gmail.com"
-                    className="text-gray-300 hover:text-neon-cyan transition-colors duration-200"
-                  >
-                    umariq.cse@gmail.com
-                  </a>
-                </div>
-                <div className="group">
-                  <p className="text-gray-500 text-xs uppercase tracking-wider mb-1">Business Email</p>
-                  <a
-                    href="mailto:umariqbal.business@gmail.com"
-                    className="text-gray-300 hover:text-neon-cyan transition-colors duration-200"
-                  >
-                    umariqbal.business@gmail.com
-                  </a>
-                </div>
-                <div className="group">
-                  <p className="text-gray-500 text-xs uppercase tracking-wider mb-1">Phone</p>
-                  <a
-                    href="tel:+917906732247"
-                    className="text-gray-300 hover:text-neon-cyan transition-colors duration-200"
-                  >
-                    +91 7906732247
-                  </a>
-                </div>
+          {/* Column 3: Contact & Social Connect (Span 4) */}
+          <div className="md:col-span-4 flex flex-col justify-between">
+            <div>
+              <h4 className="text-xs font-bold font-heading text-gray-400 uppercase tracking-widest mb-6">
+                Get In Touch
+              </h4>
+              <div className="flex flex-col gap-2.5 mb-6">
+                <a 
+                  href="mailto:umariq.cse@gmail.com" 
+                  className="text-gray-300 hover:text-white text-sm md:text-base font-semibold font-heading transition-colors hover:underline block"
+                >
+                  umariq.cse@gmail.com
+                </a>
+                <a 
+                  href="mailto:umariqbal.business@gmail.com" 
+                  className="text-gray-300 hover:text-white text-sm md:text-base font-semibold font-heading transition-colors hover:underline block"
+                >
+                  umariqbal.business@gmail.com
+                </a>
+                <a 
+                  href="mailto:info@ninzae.in" 
+                  className="text-gray-300 hover:text-white text-sm md:text-base font-semibold font-heading transition-colors hover:underline block"
+                >
+                  info@ninzae.in
+                </a>
               </div>
-            </motion.div>
+            </div>
+
+            <div className="flex flex-col gap-4">
+              <span className="text-xs font-bold font-heading text-gray-500 uppercase tracking-widest">Connect with me</span>
+              <div className="flex items-center gap-3">
+                <a
+                  href="https://www.linkedin.com/in/umariqbal000/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2.5 rounded-xl border border-[#262627] text-gray-400 hover:text-white hover:border-brand-violet bg-[#161617]/50 hover:bg-[#161617] transition-all hover:scale-105 shadow-sm"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin size={18} />
+                </a>
+                <a
+                  href="https://github.com/UmarIqbal000"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2.5 rounded-xl border border-[#262627] text-gray-400 hover:text-white hover:border-brand-violet bg-[#161617]/50 hover:bg-[#161617] transition-all hover:scale-105 shadow-sm"
+                  aria-label="GitHub"
+                >
+                  <Github size={18} />
+                </a>
+                <a
+                  href="https://leetcode.com/u/UmarIqbal000/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2.5 rounded-xl border border-[#262627] text-gray-400 hover:text-white hover:border-brand-violet bg-[#161617]/50 hover:bg-[#161617] transition-all hover:scale-105 shadow-sm flex items-center justify-center"
+                  aria-label="LeetCode"
+                >
+                  <SiLeetcode size={18} />
+                </a>
+                <a
+                  href="mailto:umariq.cse@gmail.com"
+                  className="p-2.5 rounded-xl border border-[#262627] text-gray-400 hover:text-white hover:border-brand-violet bg-[#161617]/50 hover:bg-[#161617] transition-all hover:scale-105 shadow-sm"
+                  aria-label="Email"
+                >
+                  <Mail size={18} />
+                </a>
+                <a
+                  href="https://umariqbal.in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="p-2.5 rounded-xl border border-[#262627] text-gray-400 hover:text-white hover:border-brand-violet bg-[#161617]/50 hover:bg-[#161617] transition-all hover:scale-105 shadow-sm"
+                  aria-label="Website"
+                >
+                  <Globe size={18} />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Social Links */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-white/10"
-        >
-          <div className="flex space-x-4 mb-6 md:mb-0">
-            {socialLinks.map((social, index) => (
-              <motion.a
-                key={index}
-                href={social.href}
-                target={social.name !== 'Email' && social.name !== 'Phone' ? '_blank' : undefined}
-                rel={social.name !== 'Email' && social.name !== 'Phone' ? 'noopener noreferrer' : undefined}
-                whileHover={{ scale: 1.1, y: -5 }}
-                whileTap={{ scale: 0.9 }}
-                className={`p-3 bg-white/5 rounded-full text-gray-400 ${social.color} transition-all duration-300 border border-white/5 hover:border-white/20 hover:shadow-[0_0_15px_rgba(6,182,212,0.3)]`}
-                aria-label={social.name}
-              >
-                {social.icon}
-              </motion.a>
-            ))}
-          </div>
-
-          <div className="flex items-center gap-6">
-            <p className="text-gray-500 text-sm">
-              © 2025 Umar Iqbal. All rights reserved.
-            </p>
-            <motion.button
-              onClick={scrollToTop}
-              whileHover={{ scale: 1.1, boxShadow: "0 0 15px rgba(6,182,212,0.5)" }}
-              whileTap={{ scale: 0.9 }}
-              className="p-3 bg-gradient-to-r from-neon-cyan to-electric-purple rounded-full text-white shadow-lg transition-all duration-300"
-              aria-label="Scroll to top"
-            >
-              <ArrowUp size={20} />
-            </motion.button>
-          </div>
-        </motion.div>
-
-        {/* Additional Info */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-8 pt-8 border-t border-white/5"
-        >
-          <p className="text-gray-600 text-xs uppercase tracking-widest">
-            Open to collaboration opportunities • Currently pursuing B.Tech CSE at IILM University, Greater Noida
+        {/* Bottom Bar: Built with tech stack & Back to top button */}
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 pt-8">
+          <p className="text-gray-500 text-xs font-heading text-center sm:text-left">
+            Designed & Engineered by <span className="text-white">Umar Iqbal</span>
           </p>
-        </motion.div>
+
+          <motion.button
+            onClick={scrollToTop}
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.98 }}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-[#262627] bg-[#161617]/50 hover:bg-vivid-gradient text-gray-300 hover:text-white text-xs font-bold font-heading transition-all duration-300 shadow-lg hover:shadow-[0_0_15px_rgba(124,58,237,0.3)] hover:border-transparent outline-none"
+          >
+            <span>Back to top</span>
+            <ArrowUp size={14} />
+          </motion.button>
+        </div>
       </div>
     </footer>
   );

@@ -1,215 +1,142 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, Phone, Menu, X } from 'lucide-react';
+import { Github, Linkedin, Mail, Globe, ArrowRight } from 'lucide-react';
+import { SiLeetcode } from 'react-icons/si';
 
-const Header: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [displayText, setDisplayText] = useState('');
-  
-  const titles = [
-    'Aspiring Full Stack Developer',
-    'AI & IoT Enthusiast',
-    'CS Student',
-    'Open Source Contributor'
-  ];
-  
-  const [currentTitleIndex, setCurrentTitleIndex] = useState(0);
+interface HeaderProps {
+  onViewProjects: () => void;
+}
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const currentTitle = titles[currentTitleIndex];
-    let index = 0;
-    const timer = setInterval(() => {
-      if (index <= currentTitle.length) {
-        setDisplayText(currentTitle.slice(0, index));
-        index++;
-      } else {
-        clearInterval(timer);
-        setTimeout(() => {
-          setCurrentTitleIndex((prev) => (prev + 1) % titles.length);
-        }, 2000);
-      }
-    }, 100);
-
-    return () => clearInterval(timer);
-  }, [currentTitleIndex]);
-
-  const navigationItems = [
-    { name: 'About', href: '#about' },
-    { name: 'Skills', href: '#skills' },
-    { name: 'Experience', href: '#experience' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Contact', href: '#contact' },
-  ];
-
+const Header: React.FC<HeaderProps> = ({ onViewProjects }) => {
   return (
-    <header className="relative min-h-screen flex flex-col justify-center overflow-hidden">
-      {/* Navigation */}
-      <nav 
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled ? 'glass-panel py-4' : 'bg-transparent py-6'
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between">
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="text-2xl font-bold font-heading text-white"
-          >
-            UI<span className="text-neon-cyan">.</span>
-          </motion.div>
+    <header className="relative min-h-[85vh] flex flex-col justify-center overflow-hidden py-16 md:py-24">
+      {/* Premium Dark-Theme Glowing Nebula Background */}
+      <div className="absolute inset-0 overflow-hidden -z-10 bg-[#09090B]">
+        <div 
+          className="absolute top-[-25%] left-[-25%] w-[80%] h-[80%] rounded-full bg-brand-violet/12 blur-[140px] animate-pulse" 
+          style={{ animationDuration: '8s' }} 
+        />
+        <div 
+          className="absolute bottom-[-25%] right-[-25%] w-[80%] h-[80%] rounded-full bg-brand-orange/10 blur-[140px] animate-pulse" 
+          style={{ animationDuration: '12s' }} 
+        />
+        <div 
+          className="absolute top-[20%] left-[30%] w-[60%] h-[60%] rounded-full bg-brand-pink/12 blur-[120px] animate-pulse" 
+          style={{ animationDuration: '10s' }} 
+        />
+      </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navigationItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="text-gray-300 hover:text-neon-cyan transition-colors duration-200 text-sm uppercase tracking-wider font-medium"
-              >
-                {item.name}
-              </a>
-            ))}
-          </div>
-
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 text-gray-300 hover:text-white"
-            >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Menu */}
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden glass-panel border-t border-white/10"
-          >
-            <div className="px-6 py-4 space-y-4">
-              {navigationItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="block text-gray-300 hover:text-neon-cyan transition-colors duration-200"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </a>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </nav>
-
-      {/* Hero Content */}
-      <div className="relative z-10 px-6 max-w-7xl mx-auto w-full">
-        <div className="max-w-4xl">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full relative z-10">
+        <div className="max-w-4xl mx-auto flex flex-col items-center text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
+            className="flex flex-col items-center"
           >
-            <h2 className="text-neon-cyan font-medium tracking-wider mb-4 uppercase">Welcome to my portfolio</h2>
-            <h1 className="text-6xl md:text-8xl font-bold text-white mb-6 font-heading leading-tight">
-              Umar <span className="text-transparent bg-clip-text bg-gradient-to-r from-neon-cyan to-electric-purple">Iqbal</span>
-            </h1>
-            
-            <div className="h-12 mb-8 flex items-center">
-              <div className="w-1 h-8 bg-neon-cyan mr-4 animate-pulse"></div>
-              <h2 className="text-xl md:text-3xl text-gray-300 font-light">
-                {displayText}
-              </h2>
+            {/* Pulsing Status Chip */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#161617] border border-[#262627] shadow-md rounded-full mb-8 select-none">
+              <span className="w-2.5 h-2.5 rounded-full bg-brand-pink relative flex">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-brand-pink opacity-75 animate-ping" />
+                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand-pink" />
+              </span>
+              <span className="text-xs font-semibold text-gray-300 font-heading tracking-wide">
+                Currently building Ninzae & training an AI model
+              </span>
             </div>
 
-            <p className="text-lg md:text-xl text-gray-400 mb-12 max-w-2xl leading-relaxed">
-              B.Tech CSE student passionate about AI, Python, and Cloud Computing. 
-              Crafting digital experiences with modern technologies and creative design.
+            {/* Name Heading */}
+            <h1 className="text-5xl md:text-7xl font-extrabold font-heading text-white mb-4 tracking-tight leading-none">
+              Umar <span className="text-gradient font-black">Iqbal</span>
+            </h1>
+
+            {/* Sub-headline */}
+            <h2 className="text-xl md:text-2xl font-bold font-heading text-gray-200 mb-8 tracking-wide">
+              Data Scientist & AI Researcher <span className="text-brand-pink/50">|</span> Full-Stack Developer <span className="text-brand-pink/50">|</span> Founder
+            </h2>
+
+            {/* Intro paragraph */}
+            <p className="text-gray-400 text-base md:text-lg leading-relaxed max-w-3xl mx-auto mb-10 font-medium">
+              2nd-year B.Tech CSE (Data Science and Big Data Analytics) student at{' '}
+              <span className="text-brand-violet font-semibold">IILM University, Greater Noida</span>; builds AI products with{' '}
+              <span className="font-semibold text-white">Claude Code</span>,{' '}
+              <span className="font-semibold text-white">Cursor</span> and{' '}
+              <span className="font-semibold text-white">Antigravity</span>; published NLP researcher; Vice President of the ACM Student Chapter; founder of{' '}
+              <span className="font-semibold text-white">Ninzae</span> and{' '}
+              <span className="font-semibold text-white">Umar Iqbal Store</span>.
             </p>
 
-            <div className="flex flex-wrap gap-6 mb-12">
-              <motion.a
-                href="mailto:umariq.cse@gmail.com"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-3 bg-neon-cyan/10 border border-neon-cyan text-neon-cyan px-8 py-4 rounded-full font-medium hover:bg-neon-cyan hover:text-black transition-all duration-300"
+            {/* Actions & Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 mb-10 justify-center w-full sm:w-auto">
+              <button
+                onClick={onViewProjects}
+                className="bg-vivid-gradient text-white px-8 py-3.5 rounded-xl font-bold hover:shadow-lg hover:shadow-brand-violet/25 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 font-heading text-sm md:text-base flex items-center justify-center gap-2 w-full sm:w-auto"
               >
-                <Mail size={20} />
-                Get In Touch
-              </motion.a>
+                <span>View Projects</span>
+                <ArrowRight size={18} />
+              </button>
               
-              <motion.a
-                href="https://github.com/UmarIqbal000"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center gap-3 glass-panel text-white px-8 py-4 rounded-full font-medium hover:bg-white/10 transition-all duration-300"
+              <a
+                href="#"
+                className="border border-[#262627] text-white hover:border-brand-violet px-8 py-3.5 rounded-xl font-bold hover:text-brand-violet hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 font-heading text-sm md:text-base flex items-center justify-center bg-[#161617] shadow-sm w-full sm:w-auto"
               >
-                <Github size={20} />
-                View Work
-              </motion.a>
+                Download Resume
+              </a>
             </div>
 
-            <div className="flex items-center gap-6">
-              <div className="h-px w-12 bg-gray-700"></div>
-              <div className="flex space-x-6">
-                <motion.a
-                  href="https://github.com/UmarIqbal000"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ y: -5, color: '#06b6d4' }}
-                  className="text-gray-400 transition-colors"
+            {/* Row of Icon Links */}
+            <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6">
+              <span className="text-xs font-bold font-heading text-gray-500 uppercase tracking-widest">Connect</span>
+              <div className="h-px w-8 bg-[#262627] hidden sm:block" />
+              <div className="flex items-center gap-3 flex-wrap justify-center">
+                <a 
+                  href="https://www.linkedin.com/in/umariqbal000/" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="p-2.5 rounded-xl border border-[#262627] text-gray-400 hover:text-white hover:border-brand-violet bg-[#161617] transition-all hover:-translate-y-1 hover:shadow-sm" 
+                  aria-label="LinkedIn"
                 >
-                  <Github size={24} />
-                </motion.a>
-                
-                <motion.a
-                  href="https://www.linkedin.com/in/umariqbal000/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ y: -5, color: '#06b6d4' }}
-                  className="text-gray-400 transition-colors"
+                  <Linkedin size={18} />
+                </a>
+                <a 
+                  href="https://github.com/UmarIqbal000" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="p-2.5 rounded-xl border border-[#262627] text-gray-400 hover:text-white hover:border-brand-violet bg-[#161617] transition-all hover:-translate-y-1 hover:shadow-sm" 
+                  aria-label="GitHub"
                 >
-                  <Linkedin size={24} />
-                </motion.a>
-
-                <motion.a
-                  href="mailto:umariq.cse@gmail.com"
-                  whileHover={{ y: -5, color: '#06b6d4' }}
-                  className="text-gray-400 transition-colors"
+                  <Github size={18} />
+                </a>
+                <a 
+                  href="https://leetcode.com/u/UmarIqbal000/" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="p-2.5 rounded-xl border border-[#262627] text-gray-400 hover:text-white hover:border-brand-violet bg-[#161617] transition-all hover:-translate-y-1 hover:shadow-sm flex items-center justify-center" 
+                  aria-label="LeetCode"
                 >
-                  <Mail size={24} />
-                </motion.a>
+                  <SiLeetcode size={18} />
+                </a>
+                <a 
+                  href="mailto:umariq.cse@gmail.com" 
+                  className="p-2.5 rounded-xl border border-[#262627] text-gray-400 hover:text-white hover:border-brand-violet bg-[#161617] transition-all hover:-translate-y-1 hover:shadow-sm" 
+                  aria-label="Email"
+                >
+                  <Mail size={18} />
+                </a>
+                <a 
+                  href="https://umariqbal.in" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="p-2.5 rounded-xl border border-[#262627] text-gray-400 hover:text-white hover:border-brand-violet bg-[#161617] transition-all hover:-translate-y-1 hover:shadow-sm" 
+                  aria-label="Website"
+                >
+                  <Globe size={18} />
+                </a>
               </div>
             </div>
           </motion.div>
         </div>
       </div>
-
-      {/* Scroll Indicator */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1, duration: 1 }}
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2"
-      >
-        <span className="text-xs uppercase tracking-widest text-gray-500">Scroll</span>
-        <div className="w-[1px] h-12 bg-gradient-to-b from-neon-cyan to-transparent"></div>
-      </motion.div>
     </header>
   );
 };

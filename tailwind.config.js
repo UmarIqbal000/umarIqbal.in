@@ -6,25 +6,18 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
-        heading: ['Outfit', 'sans-serif'],
+        heading: ['Space Grotesk', 'Sora', 'sans-serif'],
       },
       colors: {
-        'deep-space': '#020617',
-        'neon-cyan': '#06b6d4',
-        'electric-purple': '#8b5cf6',
-        primary: {
-          50: '#eff6ff',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          900: '#1e3a8a',
-        },
-        secondary: {
-          50: '#f0fdfa',
-          500: '#14b8a6',
-          600: '#0d9488',
-          700: '#0f766e',
-        },
+        brand: {
+          violet: '#7C3AED',
+          pink: '#EC4899',
+          orange: '#F59E0B',
+          bg: '#09090B',
+          card: '#18181B',
+          text: '#FAFAFA',
+          muted: '#A1A1AA',
+        }
       },
       animation: {
         'fade-in-up': 'fadeInUp 0.6s ease-out',
