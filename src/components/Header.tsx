@@ -1,5 +1,5 @@
 import React from 'react';
-import YashStyleScroller from './cyber/YashStyleScroller';
+import YashPortfolioScroller from './yash/YashPortfolioScroller';
 
 interface HeaderProps {
   onViewProjects: () => void;
@@ -14,7 +14,7 @@ const Header: React.FC<HeaderProps> = ({ onViewProjects }) => {
   };
 
   return (
-    <YashStyleScroller
+    <YashPortfolioScroller
       onViewProjectsTab={onViewProjects}
       onExploreTabs={handleExploreTabs}
     />
