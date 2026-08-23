@@ -37,10 +37,10 @@ function ArchiveCta() {
           className="absolute -inset-2 rounded-full blur-xl bg-gradient-to-r from-[#ff8a3d] via-[#ff3d77] via-[#a855f7] to-[#00d4ff]"
         />
         <a
-          href="#archive"
+          href="#contact"
           className="relative inline-flex items-center gap-3 rounded-full px-10 py-5 text-[12px] md:text-[13px] font-bold uppercase tracking-[0.22em] text-white bg-gradient-to-r from-[#ff8a3d] via-[#ff3d77] via-[#a855f7] to-[#00d4ff] hover:scale-105 transition-all shadow-xl"
         >
-          <span>Explore Detailed Archive Tabs</span>
+          <span>Let's Build Something Extraordinary</span>
           <motion.span
             aria-hidden
             animate={{ x: [0, 7, 0] }}
