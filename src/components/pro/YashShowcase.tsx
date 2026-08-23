@@ -63,20 +63,24 @@ export const YashShowcase: React.FC = () => {
         </div>
       </FadeUp>
 
-      {/* Pure Image-Only Continuous Smooth Infinite Scrolling Showcase */}
-      <FadeUp delay={0.15} className="mt-14 space-y-5">
-        <div className="max-w-6xl mx-auto px-6 mb-2">
-          <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#8f8f89]">
-            // VERIFIED INDUSTRY CREDENTIALS
-          </span>
-        </div>
+      {/* Centered Section 01 Header matching 02 Featured Productions */}
+      <FadeUp delay={0.15} className="mt-14 mb-10 text-center max-w-6xl mx-auto px-6">
+        <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#8f8f89]">
+          // 01 · VERIFIED INDUSTRY CREDENTIALS
+        </span>
+        <h2 className="text-4xl sm:text-6xl md:text-7xl font-black font-heading tracking-tight mt-2 uppercase">
+          Industry Credentials
+        </h2>
+      </FadeUp>
 
+      {/* Dual Continuous Infinite Marquee Rows */}
+      <div className="space-y-5">
         {/* Row 1: Continuous Leftward Infinite Flow */}
         <PureImageMarqueeRow images={rowA} reverse={false} duration="30s" />
 
         {/* Row 2: Continuous Rightward Infinite Flow */}
         <PureImageMarqueeRow images={rowB} reverse={true} duration="35s" />
-      </FadeUp>
+      </div>
     </section>
   );
 };
