@@ -1,8 +1,9 @@
 import React, { useRef } from 'react';
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { projects } from '../../lib/data';
 import { FadeUp } from './YashScrollFx';
-import { ArrowUpRight, Github } from 'lucide-react';
+import ScrollStack, { ScrollStackItem } from '../reactbits/ScrollStack';
+import { ArrowUpRight } from 'lucide-react';
 
 function ArchiveCta() {
   const ref = useRef<HTMLDivElement>(null);
@@ -54,109 +55,9 @@ function ArchiveCta() {
   );
 }
 
-function StackCard({
-  project,
-  index,
-  total,
-  progress,
-}: {
-  project: (typeof projects)[number];
-  index: number;
-  total: number;
-  progress: ReturnType<typeof useScroll>['scrollYProgress'];
-}) {
-  const start = index / total;
-  const scale = useTransform(progress, [start, 1], [1, 0.94 - (total - index - 1) * 0.015]);
-
-  return (
-    <div className="sticky" style={{ top: `calc(84px + ${index * 26}px)` }}>
-      <motion.article
-        style={{ scale }}
-        className="origin-top overflow-hidden rounded-[1.75rem] border border-white/15 bg-[#0d0d0d] shadow-[0_30px_80px_-30px_rgba(0,0,0,0.9)] mb-8"
-      >
-        {/* Header Row */}
-        <div className="flex flex-col gap-4 border-b border-white/10 px-6 py-6 sm:flex-row sm:items-center sm:justify-between md:px-10">
-          <div className="flex items-center gap-4 md:gap-6">
-            <span className="font-black text-4xl md:text-6xl text-white font-heading leading-none">
-              {project.index}
-            </span>
-            <div>
-              <p className="text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-[#8f8f89]">
-                Project · {project.year}
-              </p>
-              <h3 className="text-xl md:text-3xl font-black font-heading text-white truncate mt-0.5">
-                {project.title}
-              </h3>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <a
-              href={project.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 hover:border-white hover:bg-white hover:text-black transition-all text-xs font-mono font-bold uppercase tracking-wider text-white"
-            >
-              <span>Live Project</span>
-              <ArrowUpRight size={14} />
-            </a>
-          </div>
-        </div>
-
-        {/* Card Body */}
-        <div className="p-6 sm:p-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-          <div className="md:col-span-6 space-y-4 text-left">
-            <h4 className="text-sm font-mono font-bold text-brand-pink uppercase tracking-wider">
-              {project.tagline}
-            </h4>
-            <p className="text-sm sm:text-base text-gray-300 leading-relaxed font-sans">
-              {project.description}
-            </p>
-            <div className="flex flex-wrap gap-2 pt-2">
-              {(project.stack || []).map((t) => (
-                <span
-                  key={t}
-                  className="px-3 py-1 rounded-lg text-xs font-mono bg-[#1a1a1f] text-gray-300 border border-white/5"
-                >
-                  {t}
-                </span>
-              ))}
-            </div>
-            <div className="pt-2">
-              <span className="text-xs font-mono font-bold text-[#00D4FF]">
-                STATUS: {project.metrics}
-              </span>
-            </div>
-          </div>
-
-          {/* Right Visual Image */}
-          <div className="md:col-span-6 h-56 sm:h-72 rounded-2xl overflow-hidden border border-white/10 bg-[#16161a] relative group">
-            <img
-              src={project.image}
-              alt={project.title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-5">
-              <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">
-                {project.subtitle}
-              </span>
-            </div>
-          </div>
-        </div>
-      </motion.article>
-    </div>
-  );
-}
-
 export const YashProjects: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end end'],
-  });
-
   return (
-    <section id="work" ref={containerRef} className="relative px-6 py-20 md:px-12 bg-[#0a0a0a] text-[#f2f2ee]">
+    <section id="work" className="relative px-6 py-20 md:px-12 bg-[#0a0a0a] text-[#f2f2ee]">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <FadeUp className="mb-14 text-center">
@@ -168,18 +69,94 @@ export const YashProjects: React.FC = () => {
           </h2>
         </FadeUp>
 
-        {/* Sticky Stacked Cards */}
-        <div className="space-y-4">
-          {projects.map((project, idx) => (
-            <StackCard
+        {/* React Bits <ScrollStack /> Component */}
+        <ScrollStack
+          useWindowScroll={true}
+          itemDistance={90}
+          itemScale={0.035}
+          itemStackDistance={35}
+          stackPosition="16%"
+          scaleEndPosition="8%"
+          baseScale={0.88}
+          blurAmount={0}
+        >
+          {projects.map((project) => (
+            <ScrollStackItem
               key={project.id}
-              project={project}
-              index={idx}
-              total={projects.length}
-              progress={scrollYProgress}
-            />
+              itemClassName="border border-white/15 bg-[#0d0d0d] shadow-[0_30px_80px_-30px_rgba(0,0,0,0.9)] !p-0 overflow-hidden"
+            >
+              {/* Header Row */}
+              <div className="flex flex-col gap-4 border-b border-white/10 px-6 py-6 sm:flex-row sm:items-center sm:justify-between md:px-10 bg-[#121214]">
+                <div className="flex items-center gap-4 md:gap-6">
+                  <span className="font-black text-4xl md:text-6xl text-white font-heading leading-none">
+                    {project.index}
+                  </span>
+                  <div>
+                    <p className="text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-[#8f8f89]">
+                      Project · {project.year}
+                    </p>
+                    <h3 className="text-xl md:text-3xl font-black font-heading text-white truncate mt-0.5">
+                      {project.title}
+                    </h3>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <a
+                    href={project.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 hover:border-white hover:bg-white hover:text-black transition-all text-xs font-mono font-bold uppercase tracking-wider text-white"
+                  >
+                    <span>Live Project</span>
+                    <ArrowUpRight size={14} />
+                  </a>
+                </div>
+              </div>
+
+              {/* Card Body */}
+              <div className="p-6 sm:p-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                <div className="md:col-span-6 space-y-4 text-left">
+                  <h4 className="text-sm font-mono font-bold text-brand-pink uppercase tracking-wider">
+                    {project.tagline}
+                  </h4>
+                  <p className="text-sm sm:text-base text-gray-300 leading-relaxed font-sans">
+                    {project.description}
+                  </p>
+                  <div className="flex flex-wrap gap-2 pt-2">
+                    {(project.stack || []).map((t) => (
+                      <span
+                        key={t}
+                        className="px-3 py-1 rounded-lg text-xs font-mono bg-[#1a1a1f] text-gray-300 border border-white/5"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="pt-2">
+                    <span className="text-xs font-mono font-bold text-[#00D4FF]">
+                      STATUS: {project.metrics}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Right Visual Image */}
+                <div className="md:col-span-6 h-56 sm:h-72 rounded-2xl overflow-hidden border border-white/10 bg-[#16161a] relative group">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-5">
+                    <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">
+                      {project.subtitle}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </ScrollStackItem>
           ))}
-        </div>
+        </ScrollStack>
 
         {/* Magnetic Archive CTA */}
         <div className="mt-16 text-center">
