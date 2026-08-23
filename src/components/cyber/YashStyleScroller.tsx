@@ -1,25 +1,19 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { motion, useScroll, AnimatePresence } from 'framer-motion';
+import { motion, useScroll } from 'framer-motion';
 import { 
   ArrowDown, 
-  Sparkles, 
-  Brain, 
-  Code, 
-  Rocket, 
-  Award, 
   ExternalLink, 
   Github, 
   Linkedin, 
-  Mail, 
   Globe, 
   ArrowRight,
   Terminal,
   Copy,
-  Check
+  Check,
+  Award
 } from 'lucide-react';
 import { SiLeetcode } from 'react-icons/si';
 import CyberHUDFrame from './CyberHUDFrame';
-import { cyberAudio } from '../../utils/CyberAudioEngine';
 
 interface YashStyleScrollerProps {
   onViewProjectsTab: () => void;
@@ -39,7 +33,6 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
   const idleVideoRef = useRef<HTMLVideoElement>(null);
 
   const [currentPhase, setCurrentPhase] = useState<number>(0);
-  const [scrollProgress, setScrollProgress] = useState<number>(0);
   const [copiedEmail, setCopiedEmail] = useState(false);
 
   const { scrollYProgress } = useScroll({
@@ -75,45 +68,31 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
     let targetWalk = 0;
 
     const unsub = scrollYProgress.on('change', (p) => {
-      setScrollProgress(Math.round(p * 100));
-
       if (p < 0.28) {
-        if (currentPhase !== 0) {
-          setCurrentPhase(0);
-          cyberAudio.playTransitionSound();
-        }
+        if (currentPhase !== 0) setCurrentPhase(0);
         const p0 = Math.max(0, Math.min(1, p / 0.28));
         if (dollyVideoRef.current?.duration) {
           targetDolly = p0 * dollyVideoRef.current.duration;
         }
       } else if (p < 0.62) {
-        if (currentPhase !== 1) {
-          setCurrentPhase(1);
-          cyberAudio.playTransitionSound();
-        }
+        if (currentPhase !== 1) setCurrentPhase(1);
         const p1 = Math.max(0, Math.min(1, (p - 0.28) / (0.62 - 0.28)));
         if (orbitVideoRef.current?.duration) {
           targetOrbit = p1 * orbitVideoRef.current.duration;
         }
       } else if (p < 0.88) {
-        if (currentPhase !== 2) {
-          setCurrentPhase(2);
-          cyberAudio.playTransitionSound();
-        }
+        if (currentPhase !== 2) setCurrentPhase(2);
         const p2 = Math.max(0, Math.min(1, (p - 0.62) / (0.88 - 0.62)));
         if (walkVideoRef.current?.duration) {
           targetWalk = p2 * walkVideoRef.current.duration;
         }
       } else {
-        if (currentPhase !== 3) {
-          setCurrentPhase(3);
-          cyberAudio.playTransitionSound();
-        }
+        if (currentPhase !== 3) setCurrentPhase(3);
       }
     });
 
     const loop = () => {
-      const lerpFactor = 0.26;
+      const lerpFactor = 0.25;
 
       if (dollyVideoRef.current && Math.abs(curDolly - targetDolly) > 0.003) {
         curDolly += (targetDolly - curDolly) * lerpFactor;
@@ -141,7 +120,6 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
 
   const jumpToPhase = (phaseIdx: number) => {
     if (!containerRef.current) return;
-    cyberAudio.playClickSound();
     const top = containerRef.current.offsetTop;
     const h = containerRef.current.offsetHeight;
 
@@ -155,7 +133,6 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
   };
 
   const copyEmail = () => {
-    cyberAudio.playClickSound();
     navigator.clipboard.writeText('umariq.cse@gmail.com');
     setCopiedEmail(true);
     setTimeout(() => setCopiedEmail(false), 2000);
@@ -166,23 +143,11 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
       ref={containerRef}
       className="relative w-full h-[440vh] bg-[#09090B] select-none"
     >
-      {/* Pinned Viewport Window */}
+      {/* Pinned Fullscreen Viewport */}
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden bg-[#09090B]">
         
-        {/* Soft Ambient Radial Nebula (Zero 3D lines/rings) */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full bg-[#00D4FF]/[0.04] blur-[180px]" />
-          <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] rounded-full bg-brand-violet/[0.05] blur-[160px]" />
-        </div>
-
-        {/* CENTER CHARACTER VIDEO STAGE (Pure Video with Smooth Vignette) */}
-        <div
-          className="relative w-full max-w-4xl h-full flex items-center justify-center pointer-events-none"
-          style={{
-            maskImage: 'radial-gradient(ellipse 60% 75% at 50% 50%, black 40%, transparent 92%)',
-            WebkitMaskImage: 'radial-gradient(ellipse 60% 75% at 50% 50%, black 40%, transparent 92%)',
-          }}
-        >
+        {/* FULLSCREEN CHARACTER VIDEO STAGE (Edge-to-Edge Coverage) */}
+        <div className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden">
           {/* Video 0: Dolly In (Landing) */}
           <video
             ref={dollyVideoRef}
@@ -190,8 +155,8 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
             muted
             playsInline
             preload="auto"
-            className={`absolute max-h-[85vh] w-auto object-contain mix-blend-screen transition-opacity duration-500 ${
-              currentPhase === 0 ? 'opacity-95' : 'opacity-0 pointer-events-none'
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+              currentPhase === 0 ? 'opacity-90' : 'opacity-0 pointer-events-none'
             }`}
           />
 
@@ -202,8 +167,8 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
             muted
             playsInline
             preload="auto"
-            className={`absolute max-h-[85vh] w-auto object-contain mix-blend-screen transition-opacity duration-500 ${
-              currentPhase === 1 ? 'opacity-95' : 'opacity-0 pointer-events-none'
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+              currentPhase === 1 ? 'opacity-90' : 'opacity-0 pointer-events-none'
             }`}
           />
 
@@ -214,8 +179,8 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
             muted
             playsInline
             preload="auto"
-            className={`absolute max-h-[85vh] w-auto object-contain mix-blend-screen transition-opacity duration-500 ${
-              currentPhase === 2 ? 'opacity-95' : 'opacity-0 pointer-events-none'
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+              currentPhase === 2 ? 'opacity-90' : 'opacity-0 pointer-events-none'
             }`}
           />
 
@@ -228,10 +193,14 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
             muted
             playsInline
             preload="auto"
-            className={`absolute max-h-[85vh] w-auto object-contain mix-blend-screen transition-opacity duration-500 ${
-              currentPhase === 3 ? 'opacity-90' : 'opacity-0 pointer-events-none'
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+              currentPhase === 3 ? 'opacity-85' : 'opacity-0 pointer-events-none'
             }`}
           />
+
+          {/* Cinematic Top & Bottom Vignette Overlays for Perfect Legibility */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#09090B] via-transparent to-[#09090B]/60 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#09090B]/80 via-transparent to-[#09090B]/80 pointer-events-none" />
         </div>
 
         {/* ======================================================== */}
@@ -241,9 +210,9 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
         {/* ── SECTION 0: LANDING / HERO (0% - 28%) ── */}
         {currentPhase === 0 && (
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
+            exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4 }}
             className="absolute inset-0 flex flex-col justify-between p-6 sm:p-12 md:p-20 max-w-7xl mx-auto pointer-events-none z-20"
           >
@@ -258,20 +227,19 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
             {/* Headline & Typography */}
             <div className="max-w-xl text-left pointer-events-auto">
               <span className="font-mono text-xs text-[#00D4FF] font-bold tracking-widest uppercase block mb-2">
-                // SYSTEM INITIALIZED
+                // DATA SCIENCE & AI RESEARCH
               </span>
               <h1 className="text-5xl sm:text-7xl md:text-8xl font-black font-heading text-white tracking-tight leading-[0.95] mb-4">
                 Hi, my<br />
                 name is <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00D4FF] via-brand-pink to-brand-orange">Umar.</span>
               </h1>
-              <p className="text-gray-300 text-sm sm:text-base md:text-lg leading-relaxed mb-8 max-w-lg font-medium">
+              <p className="text-gray-200 text-sm sm:text-base md:text-lg leading-relaxed mb-8 max-w-lg font-medium drop-shadow-md">
                 I build machine learning architectures, published NLP research, and modern web applications.
               </p>
 
               <div className="flex flex-wrap items-center gap-4">
                 <button
                   onClick={() => jumpToPhase(3)}
-                  onMouseEnter={() => cyberAudio.playHoverSound()}
                   className="px-7 py-3.5 rounded-xl bg-gradient-to-r from-[#00D4FF] to-brand-violet text-white font-mono font-bold text-xs sm:text-sm tracking-wider uppercase shadow-[0_0_20px_rgba(0,212,255,0.3)] hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
                 >
                   <span>Get in touch</span>
@@ -279,8 +247,7 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
                 </button>
                 <button
                   onClick={() => jumpToPhase(1)}
-                  onMouseEnter={() => cyberAudio.playHoverSound()}
-                  className="px-6 py-3.5 rounded-xl bg-[#161617]/90 border border-[#26262D] hover:border-[#00D4FF] text-gray-300 hover:text-white font-mono font-bold text-xs tracking-wider uppercase transition-all"
+                  className="px-6 py-3.5 rounded-xl bg-[#161617]/90 backdrop-blur-md border border-[#26262D] hover:border-[#00D4FF] text-gray-300 hover:text-white font-mono font-bold text-xs tracking-wider uppercase transition-all"
                 >
                   Explore About & Skills
                 </button>
@@ -428,7 +395,6 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
                   href="https://store.umariqbal.in"
                   target="_blank"
                   rel="noopener noreferrer"
-                  onMouseEnter={() => cyberAudio.playHoverSound()}
                   className="font-mono text-[10px] text-brand-pink hover:underline font-bold uppercase inline-flex items-center gap-1"
                 >
                   <span>store.umariqbal.in</span>
@@ -446,7 +412,6 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
                   href="https://documorph.netlify.app"
                   target="_blank"
                   rel="noopener noreferrer"
-                  onMouseEnter={() => cyberAudio.playHoverSound()}
                   className="font-mono text-[10px] text-brand-orange hover:underline font-bold uppercase inline-flex items-center gap-1"
                 >
                   <span>documorph.netlify.app</span>
@@ -493,7 +458,6 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
                       </span>
                       <button
                         onClick={copyEmail}
-                        onMouseEnter={() => cyberAudio.playHoverSound()}
                         className="p-2 rounded-lg bg-[#202024] hover:bg-[#00D4FF] hover:text-black text-gray-300 text-xs font-mono transition-all flex items-center gap-1"
                       >
                         {copiedEmail ? <Check size={12} /> : <Copy size={12} />}
@@ -509,7 +473,6 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
                         href="https://www.linkedin.com/in/umariqbal000/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        onMouseEnter={() => cyberAudio.playHoverSound()}
                         className="p-3 rounded-xl bg-[#161617] border border-[#26262D] hover:border-[#00D4FF] text-gray-300 hover:text-white flex items-center justify-center gap-2 text-xs font-mono font-bold transition-all"
                       >
                         <Linkedin size={16} />
@@ -519,7 +482,6 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
                         href="https://github.com/UmarIqbal000"
                         target="_blank"
                         rel="noopener noreferrer"
-                        onMouseEnter={() => cyberAudio.playHoverSound()}
                         className="p-3 rounded-xl bg-[#161617] border border-[#26262D] hover:border-[#00D4FF] text-gray-300 hover:text-white flex items-center justify-center gap-2 text-xs font-mono font-bold transition-all"
                       >
                         <Github size={16} />
@@ -529,7 +491,6 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
                         href="https://leetcode.com/u/UmarIqbal000/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        onMouseEnter={() => cyberAudio.playHoverSound()}
                         className="p-3 rounded-xl bg-[#161617] border border-[#26262D] hover:border-[#00D4FF] text-gray-300 hover:text-white flex items-center justify-center gap-2 text-xs font-mono font-bold transition-all"
                       >
                         <SiLeetcode size={16} />
@@ -539,7 +500,6 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
                         href="https://umariqbal.in"
                         target="_blank"
                         rel="noopener noreferrer"
-                        onMouseEnter={() => cyberAudio.playHoverSound()}
                         className="p-3 rounded-xl bg-[#161617] border border-[#26262D] hover:border-[#00D4FF] text-gray-300 hover:text-white flex items-center justify-center gap-2 text-xs font-mono font-bold transition-all"
                       >
                         <Globe size={16} />
@@ -550,7 +510,6 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
                     {/* Explore Full Portfolio Details */}
                     <button
                       onClick={onExploreTabs}
-                      onMouseEnter={() => cyberAudio.playHoverSound()}
                       className="w-full mt-2 py-3 rounded-xl bg-gradient-to-r from-[#00D4FF] via-brand-violet to-brand-pink text-white font-mono font-bold text-xs tracking-wider uppercase shadow-lg hover:scale-102 active:scale-98 transition-all flex items-center justify-center gap-2"
                     >
                       <span>Explore Detailed Archive Tabs</span>
@@ -564,54 +523,15 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
           </motion.div>
         )}
 
-        {/* ======================================================== */}
-        {/* RIGHT HUD CHAPTER NAVIGATOR                               */}
-        {/* ======================================================== */}
-        <div className="fixed right-6 top-1/2 -translate-y-1/2 hidden lg:flex flex-col items-end gap-3 z-40">
-          {[
-            { idx: 0, label: '01 // INTRO' },
-            { idx: 1, label: '02 // SKILLS & ABOUT' },
-            { idx: 2, label: '03 // WORK' },
-            { idx: 3, label: '04 // CONTACT' },
-          ].map((ch) => {
-            const isActive = currentPhase === ch.idx;
-            return (
-              <button
-                key={ch.idx}
-                onClick={() => jumpToPhase(ch.idx)}
-                onMouseEnter={() => cyberAudio.playHoverSound()}
-                className={`group flex items-center gap-3 text-xs font-mono transition-all duration-300 ${
-                  isActive ? 'text-[#00D4FF] font-bold' : 'text-gray-500 hover:text-gray-300'
-                }`}
-              >
-                <span className={`transition-opacity duration-300 ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
-                  {ch.label}
-                </span>
-                <span
-                  className={`rounded-full transition-all duration-300 ${
-                    isActive
-                      ? 'w-6 h-2 bg-gradient-to-r from-[#00D4FF] to-brand-violet shadow-[0_0_12px_rgba(0,212,255,0.9)]'
-                      : 'w-2 h-2 bg-[#2c2c30] group-hover:bg-gray-400'
-                  }`}
-                />
-              </button>
-            );
-          })}
-
-          <div className="mt-2 px-2.5 py-1 rounded-md bg-[#161617]/80 border border-[#26262D] text-[10px] font-mono text-[#00D4FF]">
-            {scrollProgress}% SCRUB
-          </div>
-        </div>
-
         {/* Bottom Scroll Mouse Animation */}
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none z-20">
-          <span className="text-[9px] font-mono uppercase tracking-widest text-gray-500">
-            {currentPhase === 3 ? 'Scroll to explore archive tabs' : 'Scroll down to scrub story'}
+          <span className="text-[9px] font-mono uppercase tracking-widest text-gray-400">
+            {currentPhase === 3 ? 'Scroll down to explore archive tabs' : 'Scroll down to scrub story'}
           </span>
           <motion.div
             animate={{ y: [0, 5, 0] }}
             transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }}
-            className="w-4 h-7 rounded-full border border-gray-600 flex items-start justify-center p-1"
+            className="w-4 h-7 rounded-full border border-gray-500 flex items-start justify-center p-1"
           >
             <div className="w-1 h-1.5 rounded-full bg-[#00D4FF]" />
           </motion.div>
