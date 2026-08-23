@@ -5,7 +5,10 @@ import YashHero from './components/pro/YashHero';
 import YashShowcase from './components/pro/YashShowcase';
 import YashProjects from './components/pro/YashProjects';
 import YashAbout from './components/pro/YashAbout';
-import YashExperience from './components/pro/YashExperience';
+import YashHowIWork from './components/pro/YashHowIWork';
+import YashSkills from './components/pro/YashSkills';
+import YashJourney from './components/pro/YashJourney';
+import YashHighlights from './components/pro/YashHighlights';
 import YashContact from './components/pro/YashContact';
 
 function App() {
@@ -20,23 +23,32 @@ function App() {
 
       {/* MAIN YASH CHAUHAN NARRATIVE SUITE */}
       <main className="flex-1 w-full flex flex-col">
-        {/* 01 // HERO SECTION */}
+        {/* HERO SECTION */}
         <YashHero />
 
-        {/* 02 // DUAL COUNTER-SCROLLING CERTIFICATES SHOWCASE */}
+        {/* 01 // VERIFIED INDUSTRY CREDENTIALS SHOWCASE */}
         <YashShowcase />
 
-        {/* 03 // STICKY STACKED FEATURED PROJECTS */}
+        {/* 02 // FEATURED PRODUCTIONS & VENTURES */}
         <YashProjects />
 
-        {/* 04 // NARRATIVE ABOUT, SKILLS & WORK PROCESS */}
+        {/* 03 // ABOUT ME */}
         <YashAbout />
 
-        {/* 05 // DRIFTING HIGHLIGHTS CAROUSEL & TIMELINE */}
-        <YashExperience />
+        {/* 04 // HOW I WORK */}
+        <YashHowIWork />
+
+        {/* 05 // LANGUAGES, FRONT & BACKEND TOOLS */}
+        <YashSkills />
+
+        {/* 06 // MY JOURNEY (EXPERIENCE & EMBEDDED LINKEDIN POSTS) */}
+        <YashJourney />
+
+        {/* 07 // HIGHLIGHTS & MILESTONES CAROUSEL */}
+        <YashHighlights />
       </main>
 
-      {/* 06 // CREAM TOP-ROUNDED CONTACT FOOTER */}
+      {/* 08 // CREAM TOP-ROUNDED CONTACT FOOTER */}
       <YashContact />
 
     </div>
