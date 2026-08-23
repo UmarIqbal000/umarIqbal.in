@@ -3,12 +3,25 @@
 @tailwind utilities;
 
 @layer base {
+  *, ::before, ::after {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
   html {
     scroll-behavior: smooth;
   }
   
   body {
     @apply bg-brand-bg text-brand-text font-sans overflow-x-hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  img {
+    image-rendering: -webkit-optimize-contrast;
   }
 }
 
