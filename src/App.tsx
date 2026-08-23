@@ -10,7 +10,13 @@ import {
   Trophy, 
   Linkedin 
 } from 'lucide-react';
-import Header from './components/Header';
+import YashNav from './components/pro/YashNav';
+import YashHero from './components/pro/YashHero';
+import YashAbout from './components/pro/YashAbout';
+import YashProjects from './components/pro/YashProjects';
+import YashJourney from './components/pro/YashJourney';
+import YashContact from './components/pro/YashContact';
+
 import Education from './components/Education';
 import Skills from './components/Skills';
 import Experience from './components/Experience';
@@ -19,7 +25,6 @@ import Projects from './components/Projects';
 import Certifications from './components/Certifications';
 import Achievements from './components/Achievements';
 import LinkedIn from './components/LinkedIn';
-import Footer from './components/Footer';
 
 type TabId = 
   | 'education' 
@@ -40,7 +45,6 @@ interface Tab {
 function App() {
   const [activeTab, setActiveTab] = useState<TabId>('education');
   const [hoveredTab, setHoveredTab] = useState<TabId | null>(null);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   const tabs: Tab[] = [
     { id: 'education', label: 'Education', icon: GraduationCap },
@@ -76,115 +80,87 @@ function App() {
     }
   };
 
-  const handleTabChange = (id: TabId) => {
-    setActiveTab(id);
-    const tabElement = document.getElementById('tab-navigation-bar');
-    if (tabElement) {
-      tabElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    setMousePos({ x: e.clientX, y: e.clientY });
-  };
-
   return (
-    <div 
-      onMouseMove={handleMouseMove}
-      className="min-h-screen bg-[#09090B] text-white flex flex-col font-sans selection:bg-[#00D4FF]/20 selection:text-[#00D4FF] relative"
-    >
-      {/* Interactive spotlight cursor tracer */}
-      <div 
-        className="pointer-events-none fixed -z-10 w-[550px] h-[550px] rounded-full opacity-[0.08] blur-[100px] transition-all duration-300 ease-out bg-gradient-to-br from-[#00D4FF] via-brand-violet to-brand-pink hidden md:block"
-        style={{
-          left: `${mousePos.x}px`,
-          top: `${mousePos.y}px`,
-          transform: 'translate(-50%, -50%)',
-        }}
-      />
-
-      {/* Premium Tech Grid Background Pattern */}
-      <div className="absolute inset-0 bg-grid-pattern bg-[size:50px_50px] opacity-[0.02] pointer-events-none -z-20" />
-
-      {/* Fullscreen Video Scrollytelling Core */}
-      <Header onViewProjects={() => handleTabChange('projects')} />
+    <div className="min-h-screen bg-[#0a0a0a] text-[#f2f2ee] flex flex-col font-sans selection:bg-[#00D4FF]/20 selection:text-[#00D4FF] relative overflow-x-hidden">
       
-      {/* Detailed Archive Tabs Section */}
-      <div 
-        id="tab-navigation-bar" 
-        className="sticky top-6 z-30 w-full flex justify-center px-4 scroll-mt-6 pt-10"
-      >
-        <div className="bg-[#161617]/90 backdrop-blur-2xl border border-[#26262D] shadow-[0_12px_40px_rgba(0,0,0,0.7),_0_0_20px_rgba(0,212,255,0.05)] rounded-full p-1.5 max-w-full md:max-w-4xl overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory">
-          <div 
-            className="flex items-center gap-1"
-            onMouseLeave={() => setHoveredTab(null)}
-          >
-            {tabs.map((tab) => {
-              const Icon = tab.icon;
-              const isActive = activeTab === tab.id;
-              
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => handleTabChange(tab.id)}
-                  onMouseEnter={() => setHoveredTab(tab.id)}
-                  className={`relative px-4 py-2 md:px-5 md:py-2.5 rounded-full flex items-center gap-2 whitespace-nowrap text-xs md:text-sm font-semibold transition-all duration-300 snap-center outline-none select-none group ${
-                    isActive 
-                      ? 'text-white font-bold' 
-                      : 'text-gray-400 hover:text-white'
-                  }`}
+      {/* Yash-Style Edge-to-Edge Minimalist Header */}
+      <YashNav />
+
+      {/* Main Narrative Flow Inspired by Yash Chauhan */}
+      <main className="flex-1 w-full flex flex-col">
+        {/* 01 // HERO SECTION */}
+        <YashHero />
+
+        {/* 02 // ABOUT & WORK PROCESS */}
+        <YashAbout />
+
+        {/* 03 // FEATURED VENTURES & CASE STUDIES */}
+        <YashProjects />
+
+        {/* 04 // TIMELINE & MILESTONES */}
+        <YashJourney />
+
+        {/* DETAILED ARCHIVE SECTION (Optional Deep Dive) */}
+        <section id="archive" className="relative px-6 py-20 md:px-16 bg-[#0e0e11] border-t border-b border-white/10">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center max-w-2xl mx-auto mb-12">
+              <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#8f8f89]">
+                // COMPLETE ARCHIVES & CREDENTIALS
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-black font-heading text-white mt-1">
+                Explore Detailed Records
+              </h2>
+            </div>
+
+            {/* Navigation Tabs Bar */}
+            <div id="tab-navigation-bar" className="relative z-30 mb-8 scroll-mt-24">
+              <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-2 px-1 max-w-full justify-start md:justify-center">
+                {tabs.map((tab) => {
+                  const Icon = tab.icon;
+                  const isActive = activeTab === tab.id;
+                  const isHovered = hoveredTab === tab.id;
+
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      onMouseEnter={() => setHoveredTab(tab.id)}
+                      onMouseLeave={() => setHoveredTab(null)}
+                      className={`relative flex items-center gap-2 px-4 py-2.5 rounded-xl font-mono text-xs font-bold transition-all whitespace-nowrap ${
+                        isActive
+                          ? 'bg-[#00D4FF] text-black shadow-[0_0_20px_rgba(0,212,255,0.4)]'
+                          : 'bg-[#141416] text-gray-400 hover:text-white border border-white/5'
+                      }`}
+                    >
+                      <Icon size={14} className={isActive ? 'text-black' : 'text-[#00D4FF]'} />
+                      <span>{tab.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Tab Content Display */}
+            <div className="min-h-[400px]">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeTab}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  transition={{ duration: 0.25 }}
                 >
-                  <Icon 
-                    size={15} 
-                    className={`transition-transform duration-300 ${
-                      isActive 
-                        ? 'text-white scale-110' 
-                        : 'text-gray-500 group-hover:text-white group-hover:scale-110'
-                    }`} 
-                  />
-                  <span>{tab.label}</span>
-                  
-                  {/* Hover indicator */}
-                  {hoveredTab === tab.id && !isActive && (
-                    <motion.div
-                      layoutId="hoverTabIndicator"
-                      className="absolute inset-0 bg-[#262627]/60 rounded-full -z-10"
-                      transition={{ type: "spring", stiffness: 350, damping: 25 }}
-                    />
-                  )}
-                  
-                  {/* Active indicator */}
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeTabIndicator"
-                      className="absolute inset-0 bg-vivid-gradient rounded-full -z-10 shadow-[0_4px_12px_rgba(124,58,237,0.35)]"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
-                  )}
-                </button>
-              );
-            })}
+                  {renderTabContent()}
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </div>
-        </div>
-      </div>
-      
-      {/* Content panel beneath tabs */}
-      <main className="max-w-7xl mx-auto px-4 md:px-8 py-10 flex-grow min-h-[500px] w-full relative z-10">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.25, ease: "easeInOut" }}
-          >
-            {renderTabContent()}
-          </motion.div>
-        </AnimatePresence>
+        </section>
+
+        {/* 05 // CONTACT & TRANSMISSION */}
+        <YashContact />
       </main>
-      
-      {/* Persistent Footer */}
-      <Footer onTabChange={(id: string) => handleTabChange(id as TabId)} />
+
     </div>
   );
 }
