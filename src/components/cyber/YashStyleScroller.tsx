@@ -311,6 +311,8 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
           className="relative w-full max-w-5xl h-full flex items-center justify-center pointer-events-none transition-transform duration-300 ease-out"
           style={{
             transform: `perspective(1000px) rotateY(${mouseCoord.x * 2.5}deg) rotateX(${mouseCoord.y * -2.5}deg)`,
+            maskImage: 'radial-gradient(ellipse 65% 75% at 50% 50%, black 45%, transparent 92%)',
+            WebkitMaskImage: 'radial-gradient(ellipse 65% 75% at 50% 50%, black 45%, transparent 92%)',
           }}
         >
           {/* Video 0: Dolly In (Landing) */}
@@ -429,24 +431,24 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
             className="absolute inset-0 flex items-center justify-between p-6 sm:p-12 md:p-16 max-w-7xl mx-auto pointer-events-none z-20"
           >
             {/* Left Column: Cyber About & Identity Card */}
-            <div className="w-full max-w-sm pointer-events-auto hidden md:block">
+            <div className="w-full max-w-xs sm:max-w-sm pointer-events-auto">
               <CyberHUDFrame title="IDENTITY // PROFILE" badge="VERIFIED" accentColor="cyan">
-                <div className="flex items-center gap-4 mb-4 pb-4 border-b border-[#26262D]">
-                  <div className="w-16 h-16 rounded-xl bg-[#161617] border border-[#00D4FF]/40 flex items-center justify-center text-[#00D4FF] font-mono font-black text-xl shadow-[0_0_15px_rgba(0,212,255,0.25)]">
+                <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4 pb-3 border-b border-[#26262D]">
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl bg-[#161617] border border-[#00D4FF]/40 flex items-center justify-center text-[#00D4FF] font-mono font-black text-base sm:text-xl shadow-[0_0_15px_rgba(0,212,255,0.25)]">
                     UI
                   </div>
                   <div>
-                    <h3 className="font-heading font-black text-lg text-white">Umar Iqbal</h3>
-                    <p className="text-xs font-mono text-[#00D4FF]">Data Scientist & AI Researcher</p>
-                    <p className="text-[11px] text-gray-400 font-mono">IILM University, 2nd Year B.Tech</p>
+                    <h3 className="font-heading font-black text-base sm:text-lg text-white">Umar Iqbal</h3>
+                    <p className="text-[11px] sm:text-xs font-mono text-[#00D4FF]">Data Scientist & AI Researcher</p>
+                    <p className="text-[10px] sm:text-[11px] text-gray-400 font-mono">IILM University, 2nd Year B.Tech</p>
                   </div>
                 </div>
 
-                <div className="space-y-2 text-xs text-gray-300 leading-relaxed font-sans">
+                <div className="space-y-2 text-[11px] sm:text-xs text-gray-300 leading-relaxed font-sans">
                   <p>
                     ⚡ <span className="text-white font-bold">NLP Researcher:</span> Published research on fake news detection in social feeds (DOI: 10.13140/RG.2.2.25770.27844).
                   </p>
-                  <p>
+                  <p className="hidden sm:block">
                     ⚡ <span className="text-white font-bold">Leadership:</span> Vice President of ACM Student Chapter, organizing hackathons and technical seminars.
                   </p>
                 </div>

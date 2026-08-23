@@ -106,7 +106,7 @@ function App() {
   return (
     <div 
       onMouseMove={handleMouseMove}
-      className="min-h-screen bg-[#09090B] text-white flex flex-col font-sans selection:bg-[#00D4FF]/20 selection:text-[#00D4FF] relative overflow-x-hidden"
+      className="min-h-screen bg-[#09090B] text-white flex flex-col font-sans selection:bg-[#00D4FF]/20 selection:text-[#00D4FF] relative"
     >
       {/* Fullscreen Cyber Navigation Bar with Sound & Menu */}
       <CyberNavHeader onNavigate={handleNavMenuAction} />
