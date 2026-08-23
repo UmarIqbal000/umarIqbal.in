@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, AnimatePresence } from 'framer-motion';
-import * as THREE from 'three';
 import { 
   ArrowDown, 
   Sparkles, 
@@ -14,10 +13,7 @@ import {
   Mail, 
   Globe, 
   ArrowRight,
-  Compass,
-  Zap,
   Terminal,
-  FileText,
   Copy,
   Check
 } from 'lucide-react';
@@ -35,7 +31,6 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
   onExploreTabs,
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const threeMountRef = useRef<HTMLDivElement>(null);
 
   // 4 Video Element Refs
   const dollyVideoRef = useRef<HTMLVideoElement>(null);
@@ -45,7 +40,6 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
 
   const [currentPhase, setCurrentPhase] = useState<number>(0);
   const [scrollProgress, setScrollProgress] = useState<number>(0);
-  const [mouseCoord, setMouseCoord] = useState({ x: 0, y: 0 });
   const [copiedEmail, setCopiedEmail] = useState(false);
 
   const { scrollYProgress } = useScroll({
@@ -54,136 +48,20 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
   });
 
   // -------------------------------------------------------------
-  // PRELOAD & WARM UP VIDEOS
+  // PRELOAD & WARM UP VIDEOS FOR INSTANT SMOOTH SCRUBBING
   // -------------------------------------------------------------
   useEffect(() => {
-    [dollyVideoRef, orbitVideoRef, walkVideoRef, idleVideoRef].forEach((ref) => {
-      if (ref.current) {
-        ref.current.load();
-        ref.current.play().then(() => ref.current?.pause()).catch(() => {});
+    const vids = [dollyVideoRef.current, orbitVideoRef.current, walkVideoRef.current, idleVideoRef.current];
+    vids.forEach((v) => {
+      if (v) {
+        v.load();
+        v.play().then(() => v.pause()).catch(() => {});
       }
     });
   }, []);
 
   // -------------------------------------------------------------
-  // THREE.JS 3D WEBGL CYBER SCENE (Hologram Rings + Dust Grid)
-  // -------------------------------------------------------------
-  useEffect(() => {
-    const container = threeMountRef.current;
-    if (!container) return;
-
-    const width = container.clientWidth;
-    const height = container.clientHeight;
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
-    camera.position.z = 7;
-
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    container.appendChild(renderer.domElement);
-
-    // Group for rotating cyber elements
-    const cyberGroup = new THREE.Group();
-    scene.add(cyberGroup);
-
-    // 1. Neon Cyan Torus Ring
-    const ring1Geo = new THREE.TorusGeometry(2.5, 0.015, 16, 120);
-    const ring1Mat = new THREE.MeshBasicMaterial({ color: 0x00d4ff, transparent: true, opacity: 0.5 });
-    const ring1 = new THREE.Mesh(ring1Geo, ring1Mat);
-    ring1.rotation.x = Math.PI / 3;
-    cyberGroup.add(ring1);
-
-    // 2. Violet Outer Torus Ring
-    const ring2Geo = new THREE.TorusGeometry(3.0, 0.012, 16, 120);
-    const ring2Mat = new THREE.MeshBasicMaterial({ color: 0x7c3aed, transparent: true, opacity: 0.4 });
-    const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
-    ring2.rotation.x = -Math.PI / 4;
-    ring2.rotation.y = Math.PI / 6;
-    cyberGroup.add(ring2);
-
-    // 3. Orange Horizon Ring
-    const ring3Geo = new THREE.TorusGeometry(3.5, 0.01, 16, 120);
-    const ring3Mat = new THREE.MeshBasicMaterial({ color: 0xf97316, transparent: true, opacity: 0.3 });
-    const ring3 = new THREE.Mesh(ring3Geo, ring3Mat);
-    ring3.rotation.z = Math.PI / 3;
-    cyberGroup.add(ring3);
-
-    // 4. 3D Floating Particle Cloud
-    const particleCount = 400;
-    const pGeo = new THREE.BufferGeometry();
-    const pPos = new Float32Array(particleCount * 3);
-    const pColors = new Float32Array(particleCount * 3);
-
-    const palette = [new THREE.Color('#00D4FF'), new THREE.Color('#7C3AED'), new THREE.Color('#EC4899')];
-
-    for (let i = 0; i < particleCount; i++) {
-      pPos[i * 3] = (Math.random() - 0.5) * 14;
-      pPos[i * 3 + 1] = (Math.random() - 0.5) * 14;
-      pPos[i * 3 + 2] = (Math.random() - 0.5) * 10;
-
-      const c = palette[Math.floor(Math.random() * palette.length)];
-      pColors[i * 3] = c.r;
-      pColors[i * 3 + 1] = c.g;
-      pColors[i * 3 + 2] = c.b;
-    }
-
-    pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
-    pGeo.setAttribute('color', new THREE.BufferAttribute(pColors, 3));
-
-    const pMat = new THREE.PointsMaterial({
-      size: 0.06,
-      vertexColors: true,
-      transparent: true,
-      opacity: 0.75,
-      blending: THREE.AdditiveBlending,
-    });
-
-    const particles = new THREE.Points(pGeo, pMat);
-    scene.add(particles);
-
-    let animationId: number;
-    let clock = new THREE.Clock();
-
-    const animate = () => {
-      animationId = requestAnimationFrame(animate);
-      const delta = clock.getDelta();
-      const elapsed = clock.getElapsedTime();
-
-      cyberGroup.rotation.y = elapsed * 0.25;
-      cyberGroup.rotation.x = Math.sin(elapsed * 0.2) * 0.2;
-      particles.rotation.y = elapsed * 0.04;
-      particles.rotation.x = elapsed * 0.02;
-
-      renderer.render(scene, camera);
-    };
-
-    animate();
-
-    const handleResize = () => {
-      if (!container) return;
-      const w = container.clientWidth;
-      const h = container.clientHeight;
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      cancelAnimationFrame(animationId);
-      window.removeEventListener('resize', handleResize);
-      if (container.contains(renderer.domElement)) {
-        container.removeChild(renderer.domElement);
-      }
-      renderer.dispose();
-    };
-  }, []);
-
-  // -------------------------------------------------------------
-  // 60FPS VIDEO SCROLL INTERPOLATION
+  // 60FPS SMOOTH VIDEO SCRUB ENGINE
   // -------------------------------------------------------------
   useEffect(() => {
     let animationId: number;
@@ -235,18 +113,21 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
     });
 
     const loop = () => {
-      if (dollyVideoRef.current && Math.abs(curDolly - targetDolly) > 0.005) {
-        curDolly += (targetDolly - curDolly) * 0.22;
+      const lerpFactor = 0.26;
+
+      if (dollyVideoRef.current && Math.abs(curDolly - targetDolly) > 0.003) {
+        curDolly += (targetDolly - curDolly) * lerpFactor;
         dollyVideoRef.current.currentTime = curDolly;
       }
-      if (orbitVideoRef.current && Math.abs(curOrbit - targetOrbit) > 0.005) {
-        curOrbit += (targetOrbit - curOrbit) * 0.22;
+      if (orbitVideoRef.current && Math.abs(curOrbit - targetOrbit) > 0.003) {
+        curOrbit += (targetOrbit - curOrbit) * lerpFactor;
         orbitVideoRef.current.currentTime = curOrbit;
       }
-      if (walkVideoRef.current && Math.abs(curWalk - targetWalk) > 0.005) {
-        curWalk += (targetWalk - curWalk) * 0.22;
+      if (walkVideoRef.current && Math.abs(curWalk - targetWalk) > 0.003) {
+        curWalk += (targetWalk - curWalk) * lerpFactor;
         walkVideoRef.current.currentTime = curWalk;
       }
+
       animationId = requestAnimationFrame(loop);
     };
 
@@ -257,13 +138,6 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
       cancelAnimationFrame(animationId);
     };
   }, [scrollYProgress, currentPhase]);
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    setMouseCoord({
-      x: (e.clientX / window.innerWidth) * 2 - 1,
-      y: -(e.clientY / window.innerHeight) * 2 + 1,
-    });
-  };
 
   const jumpToPhase = (phaseIdx: number) => {
     if (!containerRef.current) return;
@@ -290,29 +164,23 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
   return (
     <div
       ref={containerRef}
-      onMouseMove={handleMouseMove}
-      className="relative w-full h-[460vh] bg-[#09090B] select-none"
+      className="relative w-full h-[440vh] bg-[#09090B] select-none"
     >
-      {/* Pinned 3D Viewport Window */}
-      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
+      {/* Pinned Viewport Window */}
+      <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden bg-[#09090B]">
         
-        {/* Three.js 3D WebGL Background Canvas */}
-        <div ref={threeMountRef} className="absolute inset-0 pointer-events-none -z-10" />
-
-        {/* Ambient Nebula Radial Wash */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none -z-20">
-          <div className="absolute top-[-20%] left-[-20%] w-[75%] h-[75%] rounded-full bg-[#00D4FF]/10 blur-[160px]" />
-          <div className="absolute bottom-[-20%] right-[-20%] w-[75%] h-[75%] rounded-full bg-brand-violet/15 blur-[160px]" />
-          <div className="absolute top-[30%] left-[30%] w-[50%] h-[50%] rounded-full bg-brand-pink/10 blur-[140px]" />
+        {/* Soft Ambient Radial Nebula (Zero 3D lines/rings) */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full bg-[#00D4FF]/[0.04] blur-[180px]" />
+          <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] rounded-full bg-brand-violet/[0.05] blur-[160px]" />
         </div>
 
-        {/* CENTER 3D CHARACTER VIDEO STAGE */}
+        {/* CENTER CHARACTER VIDEO STAGE (Pure Video with Smooth Vignette) */}
         <div
-          className="relative w-full max-w-5xl h-full flex items-center justify-center pointer-events-none transition-transform duration-300 ease-out"
+          className="relative w-full max-w-4xl h-full flex items-center justify-center pointer-events-none"
           style={{
-            transform: `perspective(1000px) rotateY(${mouseCoord.x * 2.5}deg) rotateX(${mouseCoord.y * -2.5}deg)`,
-            maskImage: 'radial-gradient(ellipse 65% 75% at 50% 50%, black 45%, transparent 92%)',
-            WebkitMaskImage: 'radial-gradient(ellipse 65% 75% at 50% 50%, black 45%, transparent 92%)',
+            maskImage: 'radial-gradient(ellipse 60% 75% at 50% 50%, black 40%, transparent 92%)',
+            WebkitMaskImage: 'radial-gradient(ellipse 60% 75% at 50% 50%, black 40%, transparent 92%)',
           }}
         >
           {/* Video 0: Dolly In (Landing) */}
@@ -322,7 +190,7 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
             muted
             playsInline
             preload="auto"
-            className={`absolute max-h-[85vh] w-auto object-contain mix-blend-screen transition-opacity duration-700 ${
+            className={`absolute max-h-[85vh] w-auto object-contain mix-blend-screen transition-opacity duration-500 ${
               currentPhase === 0 ? 'opacity-95' : 'opacity-0 pointer-events-none'
             }`}
           />
@@ -334,7 +202,7 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
             muted
             playsInline
             preload="auto"
-            className={`absolute max-h-[85vh] w-auto object-contain mix-blend-screen transition-opacity duration-700 ${
+            className={`absolute max-h-[85vh] w-auto object-contain mix-blend-screen transition-opacity duration-500 ${
               currentPhase === 1 ? 'opacity-95' : 'opacity-0 pointer-events-none'
             }`}
           />
@@ -346,7 +214,7 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
             muted
             playsInline
             preload="auto"
-            className={`absolute max-h-[85vh] w-auto object-contain mix-blend-screen transition-opacity duration-700 ${
+            className={`absolute max-h-[85vh] w-auto object-contain mix-blend-screen transition-opacity duration-500 ${
               currentPhase === 2 ? 'opacity-95' : 'opacity-0 pointer-events-none'
             }`}
           />
@@ -360,34 +228,34 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
             muted
             playsInline
             preload="auto"
-            className={`absolute max-h-[85vh] w-auto object-contain mix-blend-screen transition-opacity duration-700 ${
+            className={`absolute max-h-[85vh] w-auto object-contain mix-blend-screen transition-opacity duration-500 ${
               currentPhase === 3 ? 'opacity-90' : 'opacity-0 pointer-events-none'
             }`}
           />
         </div>
 
         {/* ======================================================== */}
-        {/* YASH CHAUHAN STYLE OVERLAY SECTIONS                       */}
+        {/* OVERLAY NARRATIVE SECTIONS                                */}
         {/* ======================================================== */}
 
         {/* ── SECTION 0: LANDING / HERO (0% - 28%) ── */}
         {currentPhase === 0 && (
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -30 }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.4 }}
             className="absolute inset-0 flex flex-col justify-between p-6 sm:p-12 md:p-20 max-w-7xl mx-auto pointer-events-none z-20"
           >
             {/* Top Status */}
             <div className="flex justify-between items-center pointer-events-auto">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#161617]/80 backdrop-blur-md border border-[#00D4FF]/30 text-[#00D4FF] text-[11px] font-mono font-bold shadow-[0_0_15px_rgba(0,212,255,0.2)]">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#161617]/80 backdrop-blur-md border border-[#00D4FF]/30 text-[#00D4FF] text-[11px] font-mono font-bold shadow-[0_0_15px_rgba(0,212,255,0.15)]">
                 <span className="w-2 h-2 rounded-full bg-[#00D4FF] animate-ping" />
                 <span>STATUS: BUILDING NINZAE & AI RESEARCH</span>
               </div>
             </div>
 
-            {/* Yash-Style SVG Headline & Typography */}
+            {/* Headline & Typography */}
             <div className="max-w-xl text-left pointer-events-auto">
               <span className="font-mono text-xs text-[#00D4FF] font-bold tracking-widest uppercase block mb-2">
                 // SYSTEM INITIALIZED
@@ -404,7 +272,7 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
                 <button
                   onClick={() => jumpToPhase(3)}
                   onMouseEnter={() => cyberAudio.playHoverSound()}
-                  className="px-7 py-3.5 rounded-xl bg-gradient-to-r from-[#00D4FF] to-brand-violet text-white font-mono font-bold text-xs sm:text-sm tracking-wider uppercase shadow-[0_0_20px_rgba(0,212,255,0.4)] hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
+                  className="px-7 py-3.5 rounded-xl bg-gradient-to-r from-[#00D4FF] to-brand-violet text-white font-mono font-bold text-xs sm:text-sm tracking-wider uppercase shadow-[0_0_20px_rgba(0,212,255,0.3)] hover:scale-105 active:scale-95 transition-all flex items-center gap-2"
                 >
                   <span>Get in touch</span>
                   <ArrowRight size={16} />
@@ -424,17 +292,17 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
         {/* ── SECTION 1: ABOUT & SKILLS MATRIX (28% - 62%) ── */}
         {currentPhase === 1 && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.5 }}
+            exit={{ opacity: 0, scale: 0.96 }}
+            transition={{ duration: 0.4 }}
             className="absolute inset-0 flex items-center justify-between p-6 sm:p-12 md:p-16 max-w-7xl mx-auto pointer-events-none z-20"
           >
             {/* Left Column: Cyber About & Identity Card */}
             <div className="w-full max-w-xs sm:max-w-sm pointer-events-auto">
               <CyberHUDFrame title="IDENTITY // PROFILE" badge="VERIFIED" accentColor="cyan">
                 <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4 pb-3 border-b border-[#26262D]">
-                  <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl bg-[#161617] border border-[#00D4FF]/40 flex items-center justify-center text-[#00D4FF] font-mono font-black text-base sm:text-xl shadow-[0_0_15px_rgba(0,212,255,0.25)]">
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl bg-[#161617] border border-[#00D4FF]/40 flex items-center justify-center text-[#00D4FF] font-mono font-black text-base sm:text-xl shadow-[0_0_15px_rgba(0,212,255,0.2)]">
                     UI
                   </div>
                   <div>
@@ -456,7 +324,7 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
             </div>
 
             {/* Right Column: Technical Skills HUD Matrix */}
-            <div className="w-full max-w-sm pointer-events-auto">
+            <div className="w-full max-w-xs sm:max-w-sm pointer-events-auto hidden sm:block">
               <CyberHUDFrame title="TECHNICAL SKILLSET" badge="CORE" accentColor="violet">
                 <div className="space-y-4">
                   {/* Skill Group 1 */}
@@ -466,7 +334,7 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
                       <span className="text-brand-violet font-bold">95%</span>
                     </div>
                     <div className="h-1.5 w-full bg-[#1e1e24] rounded-full overflow-hidden">
-                      <div className="h-full bg-gradient-to-r from-brand-violet to-brand-pink w-[95%] rounded-full shadow-[0_0_10px_rgba(124,58,237,0.8)]" />
+                      <div className="h-full bg-gradient-to-r from-brand-violet to-brand-pink w-[95%] rounded-full shadow-[0_0_8px_rgba(124,58,237,0.7)]" />
                     </div>
                     <div className="flex flex-wrap gap-1 mt-2">
                       {['PyTorch', 'TensorFlow', 'NLP', 'LLMs', 'Antigravity'].map((t) => (
@@ -484,10 +352,10 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
                       <span className="text-[#00D4FF] font-bold">90%</span>
                     </div>
                     <div className="h-1.5 w-full bg-[#1e1e24] rounded-full overflow-hidden">
-                      <div className="h-full bg-gradient-to-r from-[#00D4FF] to-brand-violet w-[90%] rounded-full shadow-[0_0_10px_rgba(0,212,255,0.8)]" />
+                      <div className="h-full bg-gradient-to-r from-[#00D4FF] to-brand-violet w-[90%] rounded-full shadow-[0_0_8px_rgba(0,212,255,0.7)]" />
                     </div>
                     <div className="flex flex-wrap gap-1 mt-2">
-                      {['React', 'TypeScript', 'Node.js', 'Three.js', 'Tailwind'].map((t) => (
+                      {['React', 'TypeScript', 'Node.js', 'Tailwind'].map((t) => (
                         <span key={t} className="text-[9px] font-mono px-2 py-0.5 rounded bg-[#1e1e24] text-gray-300 border border-[#2d2d35]">
                           {t}
                         </span>
@@ -502,10 +370,10 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
                       <span className="text-brand-orange font-bold">88%</span>
                     </div>
                     <div className="h-1.5 w-full bg-[#1e1e24] rounded-full overflow-hidden">
-                      <div className="h-full bg-gradient-to-r from-brand-orange to-brand-pink w-[88%] rounded-full shadow-[0_0_10px_rgba(249,115,22,0.8)]" />
+                      <div className="h-full bg-gradient-to-r from-brand-orange to-brand-pink w-[88%] rounded-full shadow-[0_0_8px_rgba(249,115,22,0.7)]" />
                     </div>
                     <div className="flex flex-wrap gap-1 mt-2">
-                      {['GCP #1', 'Firebase', 'Supabase', 'Vercel', 'Netlify'].map((t) => (
+                      {['GCP #1', 'Firebase', 'Supabase', 'Vercel'].map((t) => (
                         <span key={t} className="text-[9px] font-mono px-2 py-0.5 rounded bg-[#1e1e24] text-gray-300 border border-[#2d2d35]">
                           {t}
                         </span>
@@ -521,10 +389,10 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
         {/* ── SECTION 2: FEATURED WORK & VENTURES (62% - 88%) ── */}
         {currentPhase === 2 && (
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -40 }}
-            transition={{ duration: 0.5 }}
+            exit={{ opacity: 0, y: -25 }}
+            transition={{ duration: 0.4 }}
             className="absolute inset-0 flex flex-col justify-between p-6 sm:p-12 md:p-16 max-w-7xl mx-auto pointer-events-none z-20"
           >
             {/* Header */}
@@ -592,10 +460,10 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
         {/* ── SECTION 3: MILESTONES & CONTACT TERMINAL (88% - 100%) ── */}
         {currentPhase === 3 && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.92 }}
+            initial={{ opacity: 0, scale: 0.94 }}
             animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.92 }}
-            transition={{ duration: 0.5 }}
+            exit={{ opacity: 0, scale: 0.94 }}
+            transition={{ duration: 0.4 }}
             className="absolute inset-0 flex flex-col justify-center items-center p-6 max-w-4xl mx-auto pointer-events-none z-20"
           >
             <div className="pointer-events-auto w-full">
@@ -731,14 +599,14 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
           })}
 
           <div className="mt-2 px-2.5 py-1 rounded-md bg-[#161617]/80 border border-[#26262D] text-[10px] font-mono text-[#00D4FF]">
-            {scrollProgress}% 3D SCRUB
+            {scrollProgress}% SCRUB
           </div>
         </div>
 
         {/* Bottom Scroll Mouse Animation */}
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none z-20">
           <span className="text-[9px] font-mono uppercase tracking-widest text-gray-500">
-            {currentPhase === 3 ? 'Scroll to explore archive tabs' : 'Scroll down to rotate 3D world'}
+            {currentPhase === 3 ? 'Scroll to explore archive tabs' : 'Scroll down to scrub story'}
           </span>
           <motion.div
             animate={{ y: [0, 5, 0] }}

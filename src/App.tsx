@@ -21,7 +21,6 @@ import Certifications from './components/Certifications';
 import Achievements from './components/Achievements';
 import LinkedIn from './components/LinkedIn';
 import Footer from './components/Footer';
-import ParticleUniverse3D from './components/3d/ParticleUniverse3D';
 
 type TabId = 
   | 'education' 
@@ -110,9 +109,6 @@ function App() {
     >
       {/* Fullscreen Cyber Navigation Bar with Sound & Menu */}
       <CyberNavHeader onNavigate={handleNavMenuAction} />
-
-      {/* 3D WebGL Particle Universe (Full Page Depth Field) */}
-      <ParticleUniverse3D />
 
       {/* Interactive spotlight cursor tracer */}
       <div 
