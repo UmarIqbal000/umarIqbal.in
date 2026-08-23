@@ -9,7 +9,7 @@ export interface ScrollStackItemProps {
 
 export const ScrollStackItem: React.FC<ScrollStackItemProps> = ({ children, itemClassName = '' }) => (
   <div
-    className={`scroll-stack-card relative w-full h-80 my-8 p-12 rounded-[40px] shadow-[0_0_30px_rgba(0,0,0,0.1)] box-border origin-top will-change-transform ${itemClassName}`.trim()}
+    className={`scroll-stack-card relative w-full my-6 rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.5)] box-border origin-top will-change-transform ${itemClassName}`.trim()}
     style={{
       backfaceVisibility: 'hidden',
       transformStyle: 'preserve-3d'
@@ -35,19 +35,19 @@ interface ScrollStackProps {
   onStackComplete?: () => void;
 }
 
-const ScrollStack: React.FC<ScrollStackProps> = ({
+export const ScrollStack: React.FC<ScrollStackProps> = ({
   children,
   className = '',
-  itemDistance = 100,
+  itemDistance = 80,
   itemScale = 0.03,
-  itemStackDistance = 30,
-  stackPosition = '20%',
+  itemStackDistance = 28,
+  stackPosition = '18%',
   scaleEndPosition = '10%',
-  baseScale = 0.85,
+  baseScale = 0.88,
   scaleDuration = 0.5,
   rotationAmount = 0,
   blurAmount = 0,
-  useWindowScroll = false,
+  useWindowScroll = true,
   onStackComplete
 }) => {
   const scrollerRef = useRef<HTMLDivElement>(null);
@@ -105,7 +105,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
 
     isUpdatingRef.current = true;
 
-    const { scrollTop, containerHeight, scrollContainer } = getScrollData();
+    const { scrollTop, containerHeight } = getScrollData();
     const stackPositionPx = parsePercentage(stackPosition, containerHeight);
     const scaleEndPositionPx = parsePercentage(scaleEndPosition, containerHeight);
 
@@ -324,6 +324,18 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
     updateCardTransforms
   ]);
 
+  if (useWindowScroll) {
+    return (
+      <div className={`relative w-full ${className}`.trim()}>
+        <div className="scroll-stack-inner py-4">
+          {children}
+          {/* Release marker positioned cleanly right after the cards */}
+          <div className="scroll-stack-end w-full h-px mt-8" />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       className={`relative w-full h-full overflow-y-auto overflow-x-visible ${className}`.trim()}
@@ -337,7 +349,7 @@ const ScrollStack: React.FC<ScrollStackProps> = ({
         willChange: 'scroll-position'
       }}
     >
-      <div className="scroll-stack-inner pt-[20vh] px-4 sm:px-12 md:px-20 pb-[50rem] min-h-screen">
+      <div className="scroll-stack-inner pt-6 px-4 sm:px-12 md:px-20 pb-20 min-h-screen">
         {children}
         {/* Spacer so the last pin can release cleanly */}
         <div className="scroll-stack-end w-full h-px" />
