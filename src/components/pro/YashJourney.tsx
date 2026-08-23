@@ -10,7 +10,6 @@ import {
   BookOpen, 
   Trophy, 
   Sparkles, 
-  CheckCircle2,
   ChevronRight
 } from 'lucide-react';
 
@@ -25,6 +24,8 @@ interface JourneyItem {
   accentColor: string;
   borderColor: string;
   badgeBg: string;
+  iconBg: string;
+  iconColor: string;
   icon: React.ComponentType<{ size: number; className?: string }>;
   bullets: string[];
   skills: string[];
@@ -40,8 +41,10 @@ const detailedJourney: JourneyItem[] = [
     location: 'New Delhi, India · Hybrid',
     tag: 'Founder',
     accentColor: 'text-[#00D4FF]',
-    borderColor: 'border-[#00D4FF]/30 hover:border-[#00D4FF]',
+    borderColor: 'border-[#00D4FF]/20 hover:border-[#00D4FF]/60',
     badgeBg: 'bg-[#00D4FF]/10 text-[#00D4FF] border-[#00D4FF]/30',
+    iconBg: 'bg-[#00D4FF]/10 border-[#00D4FF]/30',
+    iconColor: 'text-[#00D4FF]',
     icon: Sparkles,
     bullets: [
       'Bootstrapped and launched an engineering platform dedicated to tech roadmaps, curated resources, and skill tracking for CSE students.',
@@ -59,8 +62,10 @@ const detailedJourney: JourneyItem[] = [
     location: 'New Delhi, India · Hybrid',
     tag: '1,000+ Builders',
     accentColor: 'text-brand-pink',
-    borderColor: 'border-brand-pink/30 hover:border-brand-pink',
+    borderColor: 'border-brand-pink/20 hover:border-brand-pink/60',
     badgeBg: 'bg-pink-500/10 text-pink-400 border-pink-500/30',
+    iconBg: 'bg-pink-500/10 border-pink-500/30',
+    iconColor: 'text-pink-400',
     icon: Briefcase,
     bullets: [
       'Publishes high-signal weekly deep dives into autonomous agent architectures, LLM tooling, and solo developer frameworks.',
@@ -77,8 +82,10 @@ const detailedJourney: JourneyItem[] = [
     location: 'New Delhi, India · Hybrid',
     tag: '50+ Client Builds',
     accentColor: 'text-amber-400',
-    borderColor: 'border-amber-400/30 hover:border-amber-400',
+    borderColor: 'border-amber-400/20 hover:border-amber-400/60',
     badgeBg: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
+    iconBg: 'bg-amber-500/10 border-amber-500/30',
+    iconColor: 'text-amber-400',
     icon: Briefcase,
     bullets: [
       'Engineered and deployed a live e-commerce marketplace featuring real-time inventory and Stripe 3D-Secure checkout workflows.',
@@ -95,8 +102,10 @@ const detailedJourney: JourneyItem[] = [
     location: 'Greater Noida, India · Campus',
     tag: '500+ Members',
     accentColor: 'text-purple-400',
-    borderColor: 'border-purple-400/30 hover:border-purple-400',
+    borderColor: 'border-purple-400/20 hover:border-purple-400/60',
     badgeBg: 'bg-purple-500/10 text-purple-400 border-purple-500/30',
+    iconBg: 'bg-purple-500/10 border-purple-500/30',
+    iconColor: 'text-purple-400',
     icon: Trophy,
     bullets: [
       'Directs the ACM Student Chapter, spearheading campus-wide technical workshops, competitive hackathons, and coding bootcamps.',
@@ -113,8 +122,10 @@ const detailedJourney: JourneyItem[] = [
     location: 'Cambridge, Massachusetts, USA · Remote',
     tag: 'Fellowship',
     accentColor: 'text-rose-400',
-    borderColor: 'border-rose-400/30 hover:border-rose-400',
+    borderColor: 'border-rose-400/20 hover:border-rose-400/60',
     badgeBg: 'bg-rose-500/10 text-rose-400 border-rose-500/30',
+    iconBg: 'bg-rose-500/10 border-rose-500/30',
+    iconColor: 'text-rose-400',
     icon: Award,
     bullets: [
       'Selected into the competitive global leadership program founded by Harvard Business School professors.',
@@ -126,13 +137,15 @@ const detailedJourney: JourneyItem[] = [
     id: 'harvard',
     role: 'CS50 Scholar — CS50X, CS50P, CS50AI',
     company: 'Harvard University',
-    type: 'Academic Certification',
+    type: 'Academic Distinction',
     period: 'Oct 2024 – Nov 2025',
     location: 'Cambridge, Massachusetts, USA · Remote',
     tag: 'Harvard CS50',
     accentColor: 'text-red-400',
-    borderColor: 'border-red-400/30 hover:border-red-400',
+    borderColor: 'border-red-400/20 hover:border-red-400/60',
     badgeBg: 'bg-red-500/10 text-red-400 border-red-500/30',
+    iconBg: 'bg-red-500/10 border-red-500/30',
+    iconColor: 'text-red-400',
     icon: BookOpen,
     bullets: [
       'Completed CS50x (C, Data Structures, Memory, SQL, Web) with distinction.',
@@ -150,8 +163,10 @@ const detailedJourney: JourneyItem[] = [
     location: 'Academic Research Paper',
     tag: 'Published Paper',
     accentColor: 'text-[#00D4FF]',
-    borderColor: 'border-[#00D4FF]/30 hover:border-[#00D4FF]',
+    borderColor: 'border-[#00D4FF]/20 hover:border-[#00D4FF]/60',
     badgeBg: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30',
+    iconBg: 'bg-cyan-500/10 border-cyan-500/30',
+    iconColor: 'text-cyan-400',
     icon: BookOpen,
     bullets: [
       'Authored and published academic research investigating machine learning and NLP classifiers for deceptive content detection.',
@@ -168,8 +183,10 @@ const detailedJourney: JourneyItem[] = [
     location: 'Global Leaderboard',
     tag: '15,320 Points',
     accentColor: 'text-emerald-400',
-    borderColor: 'border-emerald-400/30 hover:border-emerald-400',
+    borderColor: 'border-emerald-400/20 hover:border-emerald-400/60',
     badgeBg: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
+    iconBg: 'bg-emerald-500/10 border-emerald-500/30',
+    iconColor: 'text-emerald-400',
     icon: Trophy,
     bullets: [
       'Ranked #1 globally in the Silver League with 15,320 points across cloud architecture, compute, and machine learning quests.',
@@ -192,7 +209,7 @@ export const YashJourney: React.FC = () => {
 
   return (
     <section id="journey" className="relative px-6 py-20 md:px-12 bg-[#0a0a0d] text-[#f2f2ee] border-t border-white/5">
-      <div className="max-w-6xl mx-auto space-y-24">
+      <div className="max-w-5xl mx-auto space-y-24">
         
         {/* Section Header */}
         <FadeUp className="text-center">
@@ -207,92 +224,80 @@ export const YashJourney: React.FC = () => {
           </p>
         </FadeUp>
 
-        {/* ── PART 1: GLOWING CONTINUOUS TIMELINE ── */}
-        <div className="relative">
-          {/* Continuous Glowing Timeline Gradient Line */}
-          <div className="absolute left-4 md:left-8 top-3 bottom-3 w-1 bg-gradient-to-b from-[#00D4FF] via-purple-500 via-brand-pink to-[#00D4FF] rounded-full shadow-[0_0_15px_rgba(0,212,255,0.4)]" />
-
-          {/* Timeline Cards Container */}
-          <div className="space-y-12 pl-12 md:pl-20">
-            {detailedJourney.map((item, idx) => {
-              const Icon = item.icon;
-              return (
-                <FadeUp key={item.id} delay={idx * 0.08} className="relative group">
-                  {/* Glowing Node Marker aligned with card */}
-                  <div className="absolute -left-[45px] md:-left-[69px] top-6 flex items-center justify-center">
-                    <div className="relative flex items-center justify-center">
-                      {/* Outer pulse aura */}
-                      <div className="absolute h-8 w-8 rounded-full bg-[#00D4FF]/20 animate-ping opacity-75" />
-                      {/* Inner solid badge with icon */}
-                      <div className="relative h-7 w-7 md:h-8 md:w-8 rounded-full bg-[#121216] border-2 border-[#00D4FF] flex items-center justify-center text-[#00D4FF] shadow-[0_0_15px_rgba(0,212,255,0.6)] group-hover:scale-110 group-hover:bg-[#00D4FF] group-hover:text-black transition-all">
-                        <Icon size={14} />
+        {/* ── PART 1: CLEAN MODERN EXPERIENCE CARDS (No Side Line Trap) ── */}
+        <div className="space-y-8">
+          {detailedJourney.map((item, idx) => {
+            const Icon = item.icon;
+            return (
+              <FadeUp key={item.id} delay={idx * 0.06}>
+                <article className={`p-6 sm:p-8 md:p-9 rounded-[2rem] bg-[#121216] border border-white/10 ${item.borderColor} transition-all duration-300 shadow-xl relative overflow-hidden group hover:-translate-y-1 hover:shadow-2xl`}>
+                  
+                  {/* Top Row: Icon + Role & Tags + Date / Location */}
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-5 border-b border-white/5 pb-5">
+                    
+                    {/* Left: Icon Badge + Role Header */}
+                    <div className="flex items-start sm:items-center gap-4">
+                      <div className={`p-3 rounded-2xl border ${item.iconBg} ${item.iconColor} flex-shrink-0 shadow-md group-hover:scale-105 transition-transform`}>
+                        <Icon size={22} />
+                      </div>
+                      <div>
+                        <div className="flex items-center gap-2.5 flex-wrap">
+                          <h3 className="text-lg sm:text-2xl font-black font-heading text-white group-hover:text-[#00D4FF] transition-colors leading-snug">
+                            {item.role}
+                          </h3>
+                          <span className={`px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold border ${item.badgeBg}`}>
+                            {item.tag}
+                          </span>
+                        </div>
+                        <p className="text-sm font-mono font-semibold text-purple-300 mt-0.5">
+                          {item.company}
+                        </p>
                       </div>
                     </div>
+
+                    {/* Right: Date & Location */}
+                    <div className="flex items-center gap-4 text-xs font-mono text-gray-400 self-start md:self-auto flex-wrap">
+                      <span className="flex items-center gap-1.5 text-[#00D4FF] bg-white/5 px-3 py-1.5 rounded-full border border-white/5">
+                        <Calendar size={13} />
+                        {item.period}
+                      </span>
+                      <span className="hidden sm:flex items-center gap-1.5 text-gray-400">
+                        <MapPin size={13} />
+                        {item.location}
+                      </span>
+                    </div>
+
                   </div>
 
-                  {/* Experience Card */}
-                  <article className={`p-6 sm:p-8 md:p-10 rounded-[2rem] bg-[#121216] border border-white/10 ${item.borderColor} transition-all duration-300 shadow-2xl relative overflow-hidden group-hover:-translate-y-1`}>
-                    
-                    {/* Top Row: Tag, Period, Location */}
-                    <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
-                      <div className="flex items-center gap-2 flex-wrap">
-                        <span className={`px-3 py-1 rounded-full text-xs font-mono font-bold border ${item.badgeBg}`}>
-                          {item.tag}
-                        </span>
-                        <span className="px-3 py-1 rounded-full text-xs font-mono font-medium bg-white/5 text-gray-300 border border-white/5">
-                          {item.type}
-                        </span>
-                      </div>
+                  {/* Bullet Points with Stylized Markers */}
+                  <ul className="space-y-2.5 mb-6 text-sm sm:text-base text-gray-300 leading-relaxed font-sans pl-1">
+                    {item.bullets.map((bullet, bIdx) => (
+                      <li key={bIdx} className="flex items-start gap-3">
+                        <ChevronRight size={16} className="text-[#00D4FF] flex-shrink-0 mt-1" />
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
 
-                      <div className="flex items-center gap-4 text-xs font-mono text-gray-400">
-                        <span className="flex items-center gap-1.5 text-[#00D4FF]">
-                          <Calendar size={13} />
-                          {item.period}
-                        </span>
-                        <span className="hidden sm:flex items-center gap-1.5">
-                          <MapPin size={13} />
-                          {item.location}
-                        </span>
-                      </div>
-                    </div>
+                  {/* Skill Badges */}
+                  <div className="pt-4 border-t border-white/5 flex flex-wrap gap-2 items-center">
+                    <span className="text-[11px] font-mono font-bold text-gray-500 uppercase tracking-wider mr-1">
+                      Tech & Core:
+                    </span>
+                    {item.skills.map((skill) => (
+                      <span
+                        key={skill}
+                        className="px-3 py-1 rounded-lg text-xs font-mono font-medium bg-[#1a1a22] text-gray-200 border border-white/5 group-hover:border-white/20 transition-all"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
 
-                    {/* Role & Company */}
-                    <div className="mb-5">
-                      <h3 className="text-xl sm:text-2xl md:text-3xl font-black font-heading text-white group-hover:text-[#00D4FF] transition-colors">
-                        {item.role}
-                      </h3>
-                      <p className="text-sm sm:text-base font-mono font-semibold text-purple-300 mt-1">
-                        {item.company}
-                      </p>
-                    </div>
-
-                    {/* Bullet Points with Stylized Markers */}
-                    <ul className="space-y-2.5 mb-6 text-sm sm:text-base text-gray-300 leading-relaxed font-sans">
-                      {item.bullets.map((bullet, bIdx) => (
-                        <li key={bIdx} className="flex items-start gap-3">
-                          <ChevronRight size={16} className="text-[#00D4FF] flex-shrink-0 mt-1" />
-                          <span>{bullet}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    {/* Skill Badges */}
-                    <div className="pt-4 border-t border-white/10 flex flex-wrap gap-2">
-                      {item.skills.map((skill) => (
-                        <span
-                          key={skill}
-                          className="px-3 py-1 rounded-lg text-xs font-mono font-medium bg-[#1a1a22] text-gray-300 border border-white/5 group-hover:border-white/20 transition-all"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-
-                  </article>
-                </FadeUp>
-              );
-            })}
-          </div>
+                </article>
+              </FadeUp>
+            );
+          })}
         </div>
 
         {/* ── PART 2: EMBEDDED LINKEDIN POSTS & NETWORK ── */}
