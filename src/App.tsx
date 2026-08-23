@@ -10,11 +10,13 @@ import {
   Trophy, 
   Linkedin 
 } from 'lucide-react';
+import YashPreloader from './components/pro/YashPreloader';
 import YashNav from './components/pro/YashNav';
 import YashHero from './components/pro/YashHero';
-import YashAbout from './components/pro/YashAbout';
+import YashShowcase from './components/pro/YashShowcase';
 import YashProjects from './components/pro/YashProjects';
-import YashJourney from './components/pro/YashJourney';
+import YashAbout from './components/pro/YashAbout';
+import YashExperience from './components/pro/YashExperience';
 import YashContact from './components/pro/YashContact';
 
 import Education from './components/Education';
@@ -83,31 +85,37 @@ function App() {
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-[#f2f2ee] flex flex-col font-sans selection:bg-[#00D4FF]/20 selection:text-[#00D4FF] relative overflow-x-hidden">
       
-      {/* Yash-Style Edge-to-Edge Minimalist Header */}
+      {/* 00 // PRELOADER SCREEN */}
+      <YashPreloader />
+
+      {/* 01 // TOP MINIMALIST NAV */}
       <YashNav />
 
-      {/* Main Narrative Flow Inspired by Yash Chauhan */}
+      {/* MAIN YASH CHAUHAN NARRATIVE SUITE */}
       <main className="flex-1 w-full flex flex-col">
-        {/* 01 // HERO SECTION */}
+        {/* HERO SECTION */}
         <YashHero />
 
-        {/* 02 // ABOUT & WORK PROCESS */}
-        <YashAbout />
+        {/* DUAL COUNTER-SCROLLING WORK SHOWCASE */}
+        <YashShowcase />
 
-        {/* 03 // FEATURED VENTURES & CASE STUDIES */}
+        {/* STICKY STACKED FEATURED PROJECTS */}
         <YashProjects />
 
-        {/* 04 // TIMELINE & MILESTONES */}
-        <YashJourney />
+        {/* NARRATIVE ABOUT, SKILLS & WORK PROCESS */}
+        <YashAbout />
+
+        {/* DRIFTING HIGHLIGHTS CAROUSEL & TIMELINE */}
+        <YashExperience />
 
         {/* DETAILED ARCHIVE SECTION (Optional Deep Dive) */}
-        <section id="archive" className="relative px-6 py-20 md:px-16 bg-[#0e0e11] border-t border-b border-white/10">
+        <section id="archive" className="relative px-6 py-20 md:px-12 bg-[#0e0e11] border-t border-b border-white/10">
           <div className="max-w-6xl mx-auto">
             <div className="text-center max-w-2xl mx-auto mb-12">
               <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#8f8f89]">
                 // COMPLETE ARCHIVES & CREDENTIALS
               </span>
-              <h2 className="text-3xl sm:text-4xl font-black font-heading text-white mt-1">
+              <h2 className="text-3xl sm:text-4xl font-black font-heading text-white mt-1 uppercase">
                 Explore Detailed Records
               </h2>
             </div>
@@ -156,10 +164,10 @@ function App() {
             </div>
           </div>
         </section>
-
-        {/* 05 // CONTACT & TRANSMISSION */}
-        <YashContact />
       </main>
+
+      {/* 06 // CREAM TOP-ROUNDED CONTACT FOOTER */}
+      <YashContact />
 
     </div>
   );

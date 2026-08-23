@@ -9,7 +9,7 @@ export const siteConfig = {
   phone: "+91 7906732247",
   url: "https://umariqbal.in",
   avatar: "/head.png",
-  resume: "#contact",
+  resume: "/resume.pdf",
   socials: {
     github: "https://github.com/UmarIqbal000",
     linkedin: "https://www.linkedin.com/in/umariqbal000/",
@@ -30,10 +30,19 @@ export const siteConfig = {
 };
 
 export const skills = {
-  ai_ml: ["PyTorch", "TensorFlow", "NLP", "LLMs", "Scikit-Learn", "HuggingFace", "Python", "Data Science"],
-  frontend: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Three.js", "WebGL"],
-  backend_cloud: ["Node.js", "Express", "Firebase", "Supabase", "Google Cloud (Rank #1)", "REST APIs", "PostgreSQL", "MongoDB"],
-  tools: ["Git & GitHub", "Cursor", "Antigravity", "Claude Code", "Docker", "Vercel", "Netlify", "Figma"],
+  languages: ["Python", "TypeScript", "JavaScript", "SQL", "C++", "Java"],
+  frontend: ["React", "Next.js", "Tailwind CSS", "Framer Motion", "Three.js", "WebGL", "Vite"],
+  backend: ["Node.js", "Express", "Firebase", "Supabase", "REST APIs", "PostgreSQL", "MongoDB"],
+  tools: [
+    "Google Cloud Platform (Rank #1)",
+    "PyTorch & TensorFlow",
+    "HuggingFace",
+    "Antigravity",
+    "Cursor",
+    "Git & GitHub",
+    "Docker",
+    "Vercel & Netlify",
+  ],
 };
 
 export const marqueeSkills = [
@@ -43,62 +52,83 @@ export const marqueeSkills = [
 
 export const projects = [
   {
+    index: "01",
     id: "ninzae",
     title: "Ninzae",
     subtitle: "AI Product Studio & Machine Intelligence Incubator",
-    category: "AI & Startup",
-    period: "2025 — Present",
+    year: "2025",
     tagline: "Autonomous Agent Workflows & Cognitive AI Tools",
     description: "An AI product studio and venture incubator focused on building agentic workflows, autonomous tool integrations, and intelligent developer infrastructure.",
-    tags: ["Artificial Intelligence", "Autonomous Agents", "Next.js", "Cloud AI"],
+    stack: ["AI Agents", "Next.js", "PyTorch", "Cloud AI"],
     metrics: "Founder · Active Venture",
-    links: {
-      github: "https://github.com/UmarIqbal000",
-    },
+    href: "https://github.com/UmarIqbal000",
+    image: "/avatar_3d.jpg",
   },
   {
+    index: "02",
     id: "store",
     title: "Umar Iqbal Store",
     subtitle: "Global Developer Merchandise & Digital Storefront",
-    category: "E-Commerce & SaaS",
-    period: "2025",
+    year: "2025",
     tagline: "Live E-Commerce Platform Backed by Supabase & Firebase",
     description: "A full-stack e-commerce marketplace featuring real-time inventory management, secure user authentication, responsive shopping cart, and online checkout.",
-    tags: ["React", "Supabase", "Firebase", "Stripe", "Tailwind CSS"],
+    stack: ["React", "Supabase", "Firebase", "Stripe", "Tailwind"],
     metrics: "Live Storefront · Production",
-    links: {
-      live: "https://store.umariqbal.in",
-      github: "https://github.com/UmarIqbal000",
-    },
+    href: "https://store.umariqbal.in",
+    image: "/head.png",
   },
   {
+    index: "03",
     id: "documorph",
     title: "DocuMorph",
     subtitle: "Intelligent Document Processing & Conversion Tool",
-    category: "Web Application",
-    period: "2024",
+    year: "2024",
     tagline: "Launched Solo · Serving 5,000+ Active Global Users",
     description: "High-performance web application designed for fast, seamless document transformation, batch formatting, and automated file conversions.",
-    tags: ["TypeScript", "Client-Side Processing", "Web APIs", "5,000+ Users"],
+    stack: ["TypeScript", "Client-Side Processing", "Web APIs"],
     metrics: "5,000+ Users · 99.9% Uptime",
-    links: {
-      live: "https://documorph.netlify.app",
-      github: "https://github.com/UmarIqbal000",
-    },
+    href: "https://documorph.netlify.app",
+    image: "/head.png",
   },
   {
+    index: "04",
     id: "solboost",
     title: "SolBoost",
     subtitle: "Solar Energy Analytics & Efficiency Optimizer",
-    category: "CleanTech & Hackathon",
-    period: "2024",
+    year: "2024",
     tagline: "Hackathon Winning Concept for Clean Energy Yield",
     description: "Predictive analytics dashboard that leverages weather forecasting and solar irradiance models to optimize photovoltaic panel efficiency.",
-    tags: ["Python", "Data Analytics", "React", "Predictive Modeling"],
+    stack: ["Python", "Data Analytics", "React", "Predictive ML"],
     metrics: "Top Hackathon Finalist",
-    links: {
-      github: "https://github.com/UmarIqbal000",
-    },
+    href: "https://github.com/UmarIqbal000",
+    image: "/avatar_3d.jpg",
+  },
+];
+
+export const highlights = [
+  {
+    title: "Google Cloud Skill Boost — Rank #1",
+    detail: "Ranked #1 globally in the Silver League with 15,320 points across 18+ cloud architecture and machine learning badges.",
+    year: "2024",
+    image: "/head.png",
+  },
+  {
+    title: "Published NLP Research Paper",
+    detail: "Scientific research publication on automated fake news detection across social feeds (DOI: 10.13140/RG.2.2.25770.27844).",
+    year: "2024",
+    image: "/avatar_3d.jpg",
+  },
+  {
+    title: "Vice President — ACM Student Chapter",
+    detail: "Leading technical hackathons, programming seminars, and open-source mentoring for 500+ student developers at IILM University.",
+    year: "2024 — Present",
+    image: "/head.png",
+  },
+  {
+    title: "Founder of Ninzae & Umar Iqbal Store",
+    detail: "Bootstrapped multiple tech platforms serving thousands of global users and building production AI agents.",
+    year: "2025",
+    image: "/avatar_3d.jpg",
   },
 ];
 
@@ -130,12 +160,5 @@ export const timeline = [
     period: "2024",
     status: "completed",
     description: "Ranked #1 globally in the Silver League with 15,320 points across 18+ Google Cloud infrastructure, Kubernetes, and machine learning skill certifications.",
-  },
-  {
-    title: "Founder & Lead Developer",
-    org: "Ninzae & Umar Iqbal Store",
-    period: "2025 — Present",
-    status: "active",
-    description: "Architecting and deploying AI workflows, developer tools, and e-commerce infrastructure across production cloud systems.",
   },
 ];
