@@ -1,12 +1,12 @@
 import React from 'react';
-import Scroll3DHero from './3d/Scroll3DHero';
+import YashStyleScroller from './cyber/YashStyleScroller';
 
 interface HeaderProps {
   onViewProjects: () => void;
 }
 
 const Header: React.FC<HeaderProps> = ({ onViewProjects }) => {
-  const handleExploreMore = () => {
+  const handleExploreTabs = () => {
     const tabElement = document.getElementById('tab-navigation-bar');
     if (tabElement) {
       tabElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -14,9 +14,9 @@ const Header: React.FC<HeaderProps> = ({ onViewProjects }) => {
   };
 
   return (
-    <Scroll3DHero
-      onViewProjects={onViewProjects}
-      onExploreMore={handleExploreMore}
+    <YashStyleScroller
+      onViewProjectsTab={onViewProjects}
+      onExploreTabs={handleExploreTabs}
     />
   );
 };

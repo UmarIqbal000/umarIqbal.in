@@ -10,6 +10,7 @@ import {
   Trophy, 
   Linkedin 
 } from 'lucide-react';
+import CyberNavHeader from './components/cyber/CyberNavHeader';
 import Header from './components/Header';
 import Education from './components/Education';
 import Skills from './components/Skills';
@@ -85,6 +86,19 @@ function App() {
     }
   };
 
+  const handleNavMenuAction = (sectionId: string) => {
+    const scrollerHeight = window.innerHeight * 4.6;
+    if (sectionId === 'landing') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (sectionId === 'about') {
+      window.scrollTo({ top: scrollerHeight * 0.36, behavior: 'smooth' });
+    } else if (sectionId === 'work') {
+      window.scrollTo({ top: scrollerHeight * 0.70, behavior: 'smooth' });
+    } else if (sectionId === 'contact') {
+      window.scrollTo({ top: scrollerHeight * 0.94, behavior: 'smooth' });
+    }
+  };
+
   const handleMouseMove = (e: React.MouseEvent) => {
     setMousePos({ x: e.clientX, y: e.clientY });
   };
@@ -92,14 +106,17 @@ function App() {
   return (
     <div 
       onMouseMove={handleMouseMove}
-      className="min-h-screen bg-[#09090B] text-white flex flex-col font-sans selection:bg-brand-violet/10 selection:text-brand-violet relative overflow-x-hidden"
+      className="min-h-screen bg-[#09090B] text-white flex flex-col font-sans selection:bg-[#00D4FF]/20 selection:text-[#00D4FF] relative overflow-x-hidden"
     >
+      {/* Fullscreen Cyber Navigation Bar with Sound & Menu */}
+      <CyberNavHeader onNavigate={handleNavMenuAction} />
+
       {/* 3D WebGL Particle Universe (Full Page Depth Field) */}
       <ParticleUniverse3D />
 
       {/* Interactive spotlight cursor tracer */}
       <div 
-        className="pointer-events-none fixed -z-10 w-[550px] h-[550px] rounded-full opacity-[0.08] blur-[100px] transition-all duration-300 ease-out bg-gradient-to-br from-brand-violet via-brand-pink to-brand-orange hidden md:block"
+        className="pointer-events-none fixed -z-10 w-[550px] h-[550px] rounded-full opacity-[0.08] blur-[100px] transition-all duration-300 ease-out bg-gradient-to-br from-[#00D4FF] via-brand-violet to-brand-pink hidden md:block"
         style={{
           left: `${mousePos.x}px`,
           top: `${mousePos.y}px`,
@@ -109,18 +126,16 @@ function App() {
 
       {/* Premium Tech Grid Background Pattern */}
       <div className="absolute inset-0 bg-grid-pattern bg-[size:50px_50px] opacity-[0.02] pointer-events-none -z-20" />
-      {/* Soft overlay gradient to fade out grid pattern near the bottom */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#09090B]/50 to-[#09090B] pointer-events-none -z-20" />
 
-      {/* Persistent Hero Header with 3D Experience */}
+      {/* Yash-Style 3D Video Scrollytelling Core */}
       <Header onViewProjects={() => handleTabChange('projects')} />
       
-      {/* Floating Capsule-shaped Tab Bar */}
+      {/* Detailed Archive Tabs Section */}
       <div 
         id="tab-navigation-bar" 
-        className="sticky top-4 z-40 w-full flex justify-center px-4 scroll-mt-6"
+        className="sticky top-6 z-30 w-full flex justify-center px-4 scroll-mt-6 pt-10"
       >
-        <div className="bg-[#161617]/80 backdrop-blur-xl border border-[#262627] shadow-[0_12px_40px_rgba(0,0,0,0.5),_0_0_20px_rgba(124,58,237,0.03)] rounded-full p-1.5 max-w-full md:max-w-4xl overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory">
+        <div className="bg-[#161617]/90 backdrop-blur-2xl border border-[#26262D] shadow-[0_12px_40px_rgba(0,0,0,0.7),_0_0_20px_rgba(0,212,255,0.05)] rounded-full p-1.5 max-w-full md:max-w-4xl overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory">
           <div 
             className="flex items-center gap-1"
             onMouseLeave={() => setHoveredTab(null)}
@@ -150,7 +165,7 @@ function App() {
                   />
                   <span>{tab.label}</span>
                   
-                  {/* Hover background bubble indicator */}
+                  {/* Hover indicator */}
                   {hoveredTab === tab.id && !isActive && (
                     <motion.div
                       layoutId="hoverTabIndicator"
@@ -159,7 +174,7 @@ function App() {
                     />
                   )}
                   
-                  {/* Active background pill indicator */}
+                  {/* Active indicator */}
                   {isActive && (
                     <motion.div
                       layoutId="activeTabIndicator"
