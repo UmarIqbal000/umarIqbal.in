@@ -28,13 +28,9 @@ export const YashProfileScanner: React.FC = () => {
         {/* Photo Box with Scanner Laser */}
         <div className="relative w-28 h-32 sm:w-32 sm:h-36 rounded-xl overflow-hidden bg-[#161617] border border-[#00D4FF]/50 flex-shrink-0 flex items-center justify-center">
           <img
-            src="/Ninzae_Founder_Image.jpg"
-            alt="Umar Iqbal"
-            className="w-full h-full object-cover grayscale contrast-125"
-            onError={(e) => {
-              // Fallback if image not present
-              (e.target as HTMLElement).style.display = 'none';
-            }}
+            src="/avatar_3d.jpg"
+            alt="Umar Iqbal 3D Avatar"
+            className="w-full h-full object-cover object-top"
           />
 
           {/* Fallback Monogram */}

@@ -10,10 +10,7 @@ import {
   Terminal,
   Copy,
   Check,
-  Award,
-  Zap,
-  Code,
-  Layers
+  Award
 } from 'lucide-react';
 import { SiLeetcode } from 'react-icons/si';
 import Yash3DCanvas from './Yash3DCanvas';
@@ -33,6 +30,7 @@ export const YashPortfolioScroller: React.FC<YashPortfolioScrollerProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [copiedEmail, setCopiedEmail] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -51,6 +49,17 @@ export const YashPortfolioScroller: React.FC<YashPortfolioScrollerProps> = ({
 
   const sec3Opacity = useTransform(scrollYProgress, [0.86, 0.92, 1], [0, 1, 1]);
   const sec3Y = useTransform(scrollYProgress, [0.86, 0.92, 1], [30, 0, 0]);
+
+  // Avatar scale and opacity curve across scroll
+  const avatarScale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.95, 0.9]);
+  const avatarX = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [120, 0, 0, 0]);
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    setMousePos({
+      x: (e.clientX / window.innerWidth) * 2 - 1,
+      y: -(e.clientY / window.innerHeight) * 2 + 1,
+    });
+  };
 
   const jumpToPhase = (phaseIdx: number) => {
     if (!containerRef.current) return;
@@ -77,6 +86,7 @@ export const YashPortfolioScroller: React.FC<YashPortfolioScrollerProps> = ({
   return (
     <div
       ref={containerRef}
+      onMouseMove={handleMouseMove}
       className="relative w-full h-[460vh] bg-[#09090B] select-none font-sans"
     >
       {/* Top Fixed Cyber Navigation with Sound & Menu */}
@@ -94,6 +104,29 @@ export const YashPortfolioScroller: React.FC<YashPortfolioScrollerProps> = ({
           <div className="absolute bottom-[-20%] right-[-20%] w-[75%] h-[75%] rounded-full bg-brand-violet/15 blur-[180px]" />
           <div className="absolute top-[30%] left-[30%] w-[50%] h-[50%] rounded-full bg-brand-pink/10 blur-[160px]" />
         </div>
+
+        {/* CENTER 3D STANDING AVATAR STAGE */}
+        <motion.div
+          style={{ scale: avatarScale, x: avatarX }}
+          className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
+        >
+          <div
+            className="relative w-full max-w-xl h-full flex items-center justify-center transition-transform duration-300 ease-out"
+            style={{
+              transform: `perspective(1000px) rotateY(${mousePos.x * 4}deg) rotateX(${mousePos.y * -4}deg)`,
+            }}
+          >
+            <img
+              src="/avatar_3d.jpg"
+              alt="Umar Iqbal 3D Character"
+              className="max-h-[86vh] w-auto object-contain drop-shadow-[0_0_35px_rgba(0,212,255,0.25)]"
+              style={{
+                maskImage: 'radial-gradient(ellipse 65% 85% at 50% 50%, black 50%, transparent 95%)',
+                WebkitMaskImage: 'radial-gradient(ellipse 65% 85% at 50% 50%, black 50%, transparent 95%)',
+              }}
+            />
+          </div>
+        </motion.div>
 
         {/* ======================================================== */}
         {/* YASH CHAUHAN STYLE OVERLAY SECTIONS                       */}
@@ -151,12 +184,12 @@ export const YashPortfolioScroller: React.FC<YashPortfolioScrollerProps> = ({
           className="absolute inset-0 flex items-center justify-between p-6 sm:p-12 md:p-16 max-w-7xl mx-auto pointer-events-none z-20"
         >
           {/* Left Column: Yash Profile Picture Scanner */}
-          <div className="w-full max-w-md pointer-events-auto">
+          <div className="w-full max-w-xs sm:max-w-md pointer-events-auto">
             <YashProfileScanner />
           </div>
 
           {/* Right Column: Technical Skills HUD Matrix */}
-          <div className="w-full max-w-sm pointer-events-auto hidden md:block">
+          <div className="w-full max-w-xs sm:max-w-sm pointer-events-auto hidden sm:block">
             <CyberHUDFrame title="TECHNICAL SKILLSET" badge="CORE" accentColor="violet">
               <div className="space-y-4">
                 {/* Skill Group 1 */}
