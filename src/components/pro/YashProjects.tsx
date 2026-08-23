@@ -3,7 +3,7 @@ import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { projects } from '../../lib/data';
 import { FadeUp } from './YashScrollFx';
 import ScrollStack, { ScrollStackItem } from '../reactbits/ScrollStack';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Cpu, ShoppingBag, FileText, Sun, Sparkles, Activity, CheckCircle2, Zap } from 'lucide-react';
 
 function ArchiveCta() {
   const ref = useRef<HTMLDivElement>(null);
@@ -55,6 +55,157 @@ function ArchiveCta() {
   );
 }
 
+function ProjectVisualPreview({ id }: { id: string }) {
+  switch (id) {
+    case 'ninzae':
+      return (
+        <div className="h-full w-full bg-[#111116] p-6 flex flex-col justify-between border border-purple-500/20 rounded-2xl relative overflow-hidden font-mono">
+          <div className="flex items-center justify-between border-b border-white/10 pb-3">
+            <div className="flex items-center gap-2 text-brand-violet">
+              <Cpu size={16} />
+              <span className="text-xs font-bold uppercase tracking-wider text-white">NINZAE AGENT ENGINE</span>
+            </div>
+            <span className="flex items-center gap-1 text-[11px] text-emerald-400 font-bold bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              ACTIVE
+            </span>
+          </div>
+
+          <div className="space-y-2.5 py-3">
+            <div className="bg-[#181820] p-3 rounded-xl border border-white/5 flex items-center justify-between text-xs">
+              <span className="text-gray-400">Autonomous Core:</span>
+              <span className="text-[#00D4FF] font-bold">Multi-Agent v2.4</span>
+            </div>
+            <div className="bg-[#181820] p-3 rounded-xl border border-white/5 flex items-center justify-between text-xs">
+              <span className="text-gray-400">Inference Latency:</span>
+              <span className="text-purple-300 font-bold">18ms / token</span>
+            </div>
+            <div className="bg-[#181820] p-3 rounded-xl border border-white/5 flex items-center justify-between text-xs">
+              <span className="text-gray-400">Architecture:</span>
+              <span className="text-brand-pink font-bold">PyTorch · Cloud AI</span>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between text-[11px] text-gray-500 pt-2 border-t border-white/5">
+            <span>FOUNDER VENTURE</span>
+            <span className="text-purple-400 font-bold">ninzae.ai</span>
+          </div>
+        </div>
+      );
+
+    case 'store':
+      return (
+        <div className="h-full w-full bg-[#111116] p-6 flex flex-col justify-between border border-cyan-500/20 rounded-2xl relative overflow-hidden font-mono">
+          <div className="flex items-center justify-between border-b border-white/10 pb-3">
+            <div className="flex items-center gap-2 text-[#00D4FF]">
+              <ShoppingBag size={16} />
+              <span className="text-xs font-bold uppercase tracking-wider text-white">STOREFRONT TELEMETRY</span>
+            </div>
+            <span className="flex items-center gap-1 text-[11px] text-[#00D4FF] font-bold bg-cyan-500/10 px-2.5 py-0.5 rounded-full border border-cyan-500/20">
+              <Zap size={11} />
+              LIVE PROD
+            </span>
+          </div>
+
+          <div className="space-y-2.5 py-3">
+            <div className="bg-[#181820] p-3 rounded-xl border border-white/5 flex items-center justify-between text-xs">
+              <span className="text-gray-400">Database Layer:</span>
+              <span className="text-emerald-400 font-bold">Supabase + Firebase</span>
+            </div>
+            <div className="bg-[#181820] p-3 rounded-xl border border-white/5 flex items-center justify-between text-xs">
+              <span className="text-gray-400">Checkout Flow:</span>
+              <span className="text-[#00D4FF] font-bold">Stripe 3D-Secure</span>
+            </div>
+            <div className="bg-[#181820] p-3 rounded-xl border border-white/5 flex items-center justify-between text-xs">
+              <span className="text-gray-400">Domain:</span>
+              <span className="text-white font-bold">store.umariqbal.in</span>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between text-[11px] text-gray-500 pt-2 border-t border-white/5">
+            <span>GLOBAL DISPATCH</span>
+            <span className="text-cyan-400 font-bold">100% OPERATIONAL</span>
+          </div>
+        </div>
+      );
+
+    case 'documorph':
+      return (
+        <div className="h-full w-full bg-[#111116] p-6 flex flex-col justify-between border border-pink-500/20 rounded-2xl relative overflow-hidden font-mono">
+          <div className="flex items-center justify-between border-b border-white/10 pb-3">
+            <div className="flex items-center gap-2 text-brand-pink">
+              <FileText size={16} />
+              <span className="text-xs font-bold uppercase tracking-wider text-white">DOCUMORPH SAAS PIPELINE</span>
+            </div>
+            <span className="flex items-center gap-1 text-[11px] text-pink-400 font-bold bg-pink-500/10 px-2.5 py-0.5 rounded-full border border-pink-500/20">
+              <Activity size={11} />
+              5,000+ USERS
+            </span>
+          </div>
+
+          <div className="space-y-2.5 py-3">
+            <div className="bg-[#181820] p-3 rounded-xl border border-white/5 flex items-center justify-between text-xs">
+              <span className="text-gray-400">Processing Engine:</span>
+              <span className="text-pink-400 font-bold">Zero-Server Client WASM</span>
+            </div>
+            <div className="bg-[#181820] p-3 rounded-xl border border-white/5 flex items-center justify-between text-xs">
+              <span className="text-gray-400">Supported Codecs:</span>
+              <span className="text-[#00D4FF] font-bold">PDF · DOCX · JSON · MD</span>
+            </div>
+            <div className="bg-[#181820] p-3 rounded-xl border border-white/5 flex items-center justify-between text-xs">
+              <span className="text-gray-400">Service Reliability:</span>
+              <span className="text-emerald-400 font-bold">99.9% Netlify Uptime</span>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between text-[11px] text-gray-500 pt-2 border-t border-white/5">
+            <span>SOLO LAUNCH</span>
+            <span className="text-pink-400 font-bold">documorph.netlify.app</span>
+          </div>
+        </div>
+      );
+
+    case 'solboost':
+      return (
+        <div className="h-full w-full bg-[#111116] p-6 flex flex-col justify-between border border-amber-500/20 rounded-2xl relative overflow-hidden font-mono">
+          <div className="flex items-center justify-between border-b border-white/10 pb-3">
+            <div className="flex items-center gap-2 text-amber-400">
+              <Sun size={16} />
+              <span className="text-xs font-bold uppercase tracking-wider text-white">SOLBOOST ANALYTICS</span>
+            </div>
+            <span className="flex items-center gap-1 text-[11px] text-amber-400 font-bold bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/20">
+              <Sparkles size={11} />
+              TOP FINALIST
+            </span>
+          </div>
+
+          <div className="space-y-2.5 py-3">
+            <div className="bg-[#181820] p-3 rounded-xl border border-white/5 flex items-center justify-between text-xs">
+              <span className="text-gray-400">Optimization Model:</span>
+              <span className="text-amber-400 font-bold">Solar Irradiance ML</span>
+            </div>
+            <div className="bg-[#181820] p-3 rounded-xl border border-white/5 flex items-center justify-between text-xs">
+              <span className="text-gray-400">Yield Enhancement:</span>
+              <span className="text-emerald-400 font-bold">+34.8% Panel Output</span>
+            </div>
+            <div className="bg-[#181820] p-3 rounded-xl border border-white/5 flex items-center justify-between text-xs">
+              <span className="text-gray-400">Telemetry Feed:</span>
+              <span className="text-[#00D4FF] font-bold">Real-time Weather Radar</span>
+            </div>
+          </div>
+
+          <div className="flex items-center justify-between text-[11px] text-gray-500 pt-2 border-t border-white/5">
+            <span>HACKATHON WINNER</span>
+            <span className="text-amber-400 font-bold">solboost000.netlify.app</span>
+          </div>
+        </div>
+      );
+
+    default:
+      return null;
+  }
+}
+
 export const YashProjects: React.FC = () => {
   return (
     <section id="work" className="relative px-6 py-20 md:px-12 bg-[#0a0a0a] text-[#f2f2ee]">
@@ -72,18 +223,17 @@ export const YashProjects: React.FC = () => {
         {/* React Bits <ScrollStack /> Component */}
         <ScrollStack
           useWindowScroll={true}
-          itemDistance={90}
-          itemScale={0.035}
-          itemStackDistance={35}
-          stackPosition="16%"
+          itemDistance={80}
+          itemScale={0.02}
+          itemStackDistance={30}
+          stackPosition="15%"
           scaleEndPosition="8%"
-          baseScale={0.88}
-          blurAmount={0}
+          baseScale={0.95}
         >
           {projects.map((project) => (
             <ScrollStackItem
               key={project.id}
-              itemClassName="border border-white/15 bg-[#0d0d0d] shadow-[0_30px_80px_-30px_rgba(0,0,0,0.9)] !p-0 overflow-hidden"
+              itemClassName="border border-white/15 bg-[#0d0d0d] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.9)] !p-0 overflow-hidden"
             >
               {/* Header Row */}
               <div className="flex flex-col gap-4 border-b border-white/10 px-6 py-6 sm:flex-row sm:items-center sm:justify-between md:px-10 bg-[#121214]">
@@ -140,18 +290,9 @@ export const YashProjects: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Right Visual Image */}
-                <div className="md:col-span-6 h-56 sm:h-72 rounded-2xl overflow-hidden border border-white/10 bg-[#16161a] relative group">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-5">
-                    <span className="font-mono text-xs font-bold text-white uppercase tracking-widest">
-                      {project.subtitle}
-                    </span>
-                  </div>
+                {/* Right Visual Dashboard Preview (Crystal Clear High-DPI) */}
+                <div className="md:col-span-6 h-60 sm:h-72 rounded-2xl overflow-hidden border border-white/10 bg-[#16161a] relative group">
+                  <ProjectVisualPreview id={project.id} />
                 </div>
               </div>
             </ScrollStackItem>
