@@ -30,14 +30,14 @@ const skillCategories = [
     icon: Server,
     color: 'text-purple-400',
     borderColor: 'group-hover:border-purple-400/40',
-    items: skills.backend_cloud || ['Node.js', 'Express', 'Firebase', 'Supabase', 'Google Cloud #1', 'REST APIs', 'PostgreSQL', 'MongoDB'],
+    items: skills.backend_cloud || ['Node.js', 'Express', 'Firebase', 'Supabase', 'Google Cloud (Rank #1)', 'REST APIs', 'PostgreSQL', 'MongoDB'],
   },
   {
     title: 'Developer Tools & Infra',
     icon: Wrench,
     color: 'text-emerald-400',
     borderColor: 'group-hover:border-emerald-400/40',
-    items: skills.tools || ['Google Cloud Platform', 'Antigravity', 'Cursor', 'Git & GitHub', 'Docker', 'Vercel & Netlify'],
+    items: skills.tools || ['Google Cloud Platform (Rank #1)', 'Antigravity', 'Cursor', 'Git & GitHub', 'Docker', 'Vercel & Netlify'],
   },
 ];
 
@@ -58,15 +58,15 @@ export const YashSkills: React.FC = () => {
           </p>
         </FadeUp>
 
-        {/* Categorized Skills Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Centered Symmetrical Skills Flex Grid */}
+        <div className="flex flex-wrap justify-center gap-6">
           {skillCategories.map((cat, idx) => {
             const Icon = cat.icon;
             return (
               <FadeUp
                 key={cat.title}
                 delay={idx * 0.1}
-                className={`group p-6 sm:p-8 rounded-2xl bg-[#141416] border border-white/10 ${cat.borderColor} transition-all duration-300 shadow-xl flex flex-col justify-between`}
+                className={`group w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] p-6 sm:p-8 rounded-2xl bg-[#141416] border border-white/10 ${cat.borderColor} transition-all duration-300 shadow-xl flex flex-col justify-between`}
               >
                 <div>
                   <div className="flex items-center gap-3 mb-5">

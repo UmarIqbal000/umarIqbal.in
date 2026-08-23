@@ -323,13 +323,13 @@ export const YashJourney: React.FC = () => {
             </div>
           </FadeUp>
 
-          {/* Grid of Embedded Posts */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Centered Symmetrical Grid of Embedded Posts */}
+          <div className="flex flex-wrap justify-center gap-8">
             {linkedInPosts.map((post, idx) => (
               <FadeUp
                 key={post.embedUrl}
                 delay={idx * 0.1}
-                className="rounded-3xl overflow-hidden bg-[#1B1F23] border border-[#38434F] shadow-2xl relative"
+                className="w-full md:w-[calc(50%-16px)] max-w-xl rounded-3xl overflow-hidden bg-[#1B1F23] border border-[#38434F] shadow-2xl relative"
               >
                 {!loadedIframes[idx] && (
                   <div className="absolute inset-0 flex items-center justify-center bg-[#1B1F23]/80 z-10">
