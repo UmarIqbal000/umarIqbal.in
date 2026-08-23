@@ -6,10 +6,10 @@ import { SparkleIcon, OrbIcon, DiscIcon, BoltIcon, FlowerIcon, RingIcon } from '
 import { Award, BookOpen, Cpu, Globe } from 'lucide-react';
 
 const skillGroups = [
-  { title: 'AI & Machine Learning', items: skills.ai_ml },
-  { title: 'Frontend Engineering', items: skills.frontend },
-  { title: 'Backend & Cloud', items: skills.backend_cloud },
-  { title: 'Developer Tools', items: skills.tools },
+  { title: 'AI & Machine Learning', items: skills.ai_ml || skills.languages || [] },
+  { title: 'Frontend Engineering', items: skills.frontend || [] },
+  { title: 'Backend & Cloud', items: skills.backend_cloud || skills.backend || [] },
+  { title: 'Developer Tools', items: skills.tools || [] },
 ];
 
 export const YashAbout: React.FC = () => {
@@ -120,7 +120,7 @@ export const YashAbout: React.FC = () => {
                   {group.title}
                 </h4>
                 <div className="flex flex-wrap gap-2">
-                  {group.items.map((item) => (
+                  {(group.items || []).map((item) => (
                     <span
                       key={item}
                       className="px-3 py-1 rounded-lg text-xs font-mono font-medium bg-[#1e1e24] text-gray-200 border border-white/5 hover:border-white/20 transition-all"

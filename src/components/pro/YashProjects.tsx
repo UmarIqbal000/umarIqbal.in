@@ -113,7 +113,7 @@ function StackCard({
               {project.description}
             </p>
             <div className="flex flex-wrap gap-2 pt-2">
-              {project.stack.map((t) => (
+              {(project.stack || []).map((t) => (
                 <span
                   key={t}
                   className="px-3 py-1 rounded-lg text-xs font-mono bg-[#1a1a1f] text-gray-300 border border-white/5"

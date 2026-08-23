@@ -31,8 +31,10 @@ export const siteConfig = {
 
 export const skills = {
   languages: ["Python", "TypeScript", "JavaScript", "SQL", "C++", "Java"],
+  ai_ml: ["PyTorch", "TensorFlow", "NLP", "LLMs", "Scikit-Learn", "HuggingFace", "Python", "Data Science"],
   frontend: ["React", "Next.js", "Tailwind CSS", "Framer Motion", "Three.js", "WebGL", "Vite"],
   backend: ["Node.js", "Express", "Firebase", "Supabase", "REST APIs", "PostgreSQL", "MongoDB"],
+  backend_cloud: ["Node.js", "Express", "Firebase", "Supabase", "Google Cloud (Rank #1)", "REST APIs", "PostgreSQL", "MongoDB"],
   tools: [
     "Google Cloud Platform (Rank #1)",
     "PyTorch & TensorFlow",
