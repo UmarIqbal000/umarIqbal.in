@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { projects } from '../../lib/data';
 import { FadeUp } from './YashScrollFx';
-import { ArrowUpRight, Cpu, ShoppingBag, FileText, Sun, Sparkles, Activity, Zap } from 'lucide-react';
+import { ArrowUpRight, Globe, Sparkles } from 'lucide-react';
 
 function ArchiveCta() {
   const ref = useRef<HTMLDivElement>(null);
@@ -54,157 +54,6 @@ function ArchiveCta() {
   );
 }
 
-function ProjectVisualPreview({ id }: { id: string }) {
-  switch (id) {
-    case 'ninzae':
-      return (
-        <div className="h-full w-full bg-[#111116] p-6 flex flex-col justify-between border border-purple-500/20 rounded-2xl relative overflow-hidden font-mono">
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
-            <div className="flex items-center gap-2 text-brand-violet">
-              <Cpu size={16} />
-              <span className="text-xs font-bold uppercase tracking-wider text-white">NINZAE AGENT ENGINE</span>
-            </div>
-            <span className="flex items-center gap-1 text-[11px] text-emerald-400 font-bold bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              ACTIVE
-            </span>
-          </div>
-
-          <div className="space-y-2.5 py-3">
-            <div className="bg-[#181820] p-3 rounded-xl border border-white/5 flex items-center justify-between text-xs">
-              <span className="text-gray-400">Autonomous Core:</span>
-              <span className="text-[#00D4FF] font-bold">Multi-Agent v2.4</span>
-            </div>
-            <div className="bg-[#181820] p-3 rounded-xl border border-white/5 flex items-center justify-between text-xs">
-              <span className="text-gray-400">Inference Latency:</span>
-              <span className="text-purple-300 font-bold">18ms / token</span>
-            </div>
-            <div className="bg-[#181820] p-3 rounded-xl border border-white/5 flex items-center justify-between text-xs">
-              <span className="text-gray-400">Architecture:</span>
-              <span className="text-brand-pink font-bold">PyTorch · Cloud AI</span>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between text-[11px] text-gray-500 pt-2 border-t border-white/5">
-            <span>FOUNDER VENTURE</span>
-            <span className="text-purple-400 font-bold">ninzae.ai</span>
-          </div>
-        </div>
-      );
-
-    case 'store':
-      return (
-        <div className="h-full w-full bg-[#111116] p-6 flex flex-col justify-between border border-cyan-500/20 rounded-2xl relative overflow-hidden font-mono">
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
-            <div className="flex items-center gap-2 text-[#00D4FF]">
-              <ShoppingBag size={16} />
-              <span className="text-xs font-bold uppercase tracking-wider text-white">STOREFRONT TELEMETRY</span>
-            </div>
-            <span className="flex items-center gap-1 text-[11px] text-[#00D4FF] font-bold bg-cyan-500/10 px-2.5 py-0.5 rounded-full border border-cyan-500/20">
-              <Zap size={11} />
-              LIVE PROD
-            </span>
-          </div>
-
-          <div className="space-y-2.5 py-3">
-            <div className="bg-[#181820] p-3 rounded-xl border border-white/5 flex items-center justify-between text-xs">
-              <span className="text-gray-400">Database Layer:</span>
-              <span className="text-emerald-400 font-bold">Supabase + Firebase</span>
-            </div>
-            <div className="bg-[#181820] p-3 rounded-xl border border-white/5 flex items-center justify-between text-xs">
-              <span className="text-gray-400">Checkout Flow:</span>
-              <span className="text-[#00D4FF] font-bold">Stripe 3D-Secure</span>
-            </div>
-            <div className="bg-[#181820] p-3 rounded-xl border border-white/5 flex items-center justify-between text-xs">
-              <span className="text-gray-400">Domain:</span>
-              <span className="text-white font-bold">store.umariqbal.in</span>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between text-[11px] text-gray-500 pt-2 border-t border-white/5">
-            <span>GLOBAL DISPATCH</span>
-            <span className="text-cyan-400 font-bold">100% OPERATIONAL</span>
-          </div>
-        </div>
-      );
-
-    case 'documorph':
-      return (
-        <div className="h-full w-full bg-[#111116] p-6 flex flex-col justify-between border border-pink-500/20 rounded-2xl relative overflow-hidden font-mono">
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
-            <div className="flex items-center gap-2 text-brand-pink">
-              <FileText size={16} />
-              <span className="text-xs font-bold uppercase tracking-wider text-white">DOCUMORPH SAAS PIPELINE</span>
-            </div>
-            <span className="flex items-center gap-1 text-[11px] text-pink-400 font-bold bg-pink-500/10 px-2.5 py-0.5 rounded-full border border-pink-500/20">
-              <Activity size={11} />
-              5,000+ USERS
-            </span>
-          </div>
-
-          <div className="space-y-2.5 py-3">
-            <div className="bg-[#181820] p-3 rounded-xl border border-white/5 flex items-center justify-between text-xs">
-              <span className="text-gray-400">Processing Engine:</span>
-              <span className="text-pink-400 font-bold">Zero-Server Client WASM</span>
-            </div>
-            <div className="bg-[#181820] p-3 rounded-xl border border-white/5 flex items-center justify-between text-xs">
-              <span className="text-gray-400">Supported Codecs:</span>
-              <span className="text-[#00D4FF] font-bold">PDF · DOCX · JSON · MD</span>
-            </div>
-            <div className="bg-[#181820] p-3 rounded-xl border border-white/5 flex items-center justify-between text-xs">
-              <span className="text-gray-400">Service Reliability:</span>
-              <span className="text-emerald-400 font-bold">99.9% Netlify Uptime</span>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between text-[11px] text-gray-500 pt-2 border-t border-white/5">
-            <span>SOLO LAUNCH</span>
-            <span className="text-pink-400 font-bold">documorph.netlify.app</span>
-          </div>
-        </div>
-      );
-
-    case 'solboost':
-      return (
-        <div className="h-full w-full bg-[#111116] p-6 flex flex-col justify-between border border-amber-500/20 rounded-2xl relative overflow-hidden font-mono">
-          <div className="flex items-center justify-between border-b border-white/10 pb-3">
-            <div className="flex items-center gap-2 text-amber-400">
-              <Sun size={16} />
-              <span className="text-xs font-bold uppercase tracking-wider text-white">SOLBOOST ANALYTICS</span>
-            </div>
-            <span className="flex items-center gap-1 text-[11px] text-amber-400 font-bold bg-amber-500/10 px-2.5 py-0.5 rounded-full border border-amber-500/20">
-              <Sparkles size={11} />
-              TOP FINALIST
-            </span>
-          </div>
-
-          <div className="space-y-2.5 py-3">
-            <div className="bg-[#181820] p-3 rounded-xl border border-white/5 flex items-center justify-between text-xs">
-              <span className="text-gray-400">Optimization Model:</span>
-              <span className="text-amber-400 font-bold">Solar Irradiance ML</span>
-            </div>
-            <div className="bg-[#181820] p-3 rounded-xl border border-white/5 flex items-center justify-between text-xs">
-              <span className="text-gray-400">Yield Enhancement:</span>
-              <span className="text-emerald-400 font-bold">+34.8% Panel Output</span>
-            </div>
-            <div className="bg-[#181820] p-3 rounded-xl border border-white/5 flex items-center justify-between text-xs">
-              <span className="text-gray-400">Telemetry Feed:</span>
-              <span className="text-[#00D4FF] font-bold">Real-time Weather Radar</span>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-between text-[11px] text-gray-500 pt-2 border-t border-white/5">
-            <span>HACKATHON WINNER</span>
-            <span className="text-amber-400 font-bold">solboost000.netlify.app</span>
-          </div>
-        </div>
-      );
-
-    default:
-      return null;
-  }
-}
-
 export const YashProjects: React.FC = () => {
   return (
     <section id="work" className="relative px-6 py-20 md:px-12 bg-[#0a0a0a] text-[#f2f2ee]">
@@ -212,18 +61,18 @@ export const YashProjects: React.FC = () => {
         {/* Section Header */}
         <FadeUp className="mb-14 text-center">
           <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#8f8f89]">
-            // 02 · FEATURED PRODUCTIONS
+            // 02 · FEATURED PRODUCTIONS & VENTURES
           </span>
           <h2 className="text-4xl sm:text-6xl md:text-7xl font-black font-heading tracking-tight mt-2 uppercase">
             Selected Work & Ventures
           </h2>
         </FadeUp>
 
-        {/* Clean Standard Project Cards List (No Stacking / No Scroll Lock) */}
-        <div className="space-y-8 md:space-y-10">
+        {/* Clean 3-Project List with High-Res Platform Previews */}
+        <div className="space-y-10 md:space-y-14">
           {projects.map((project, idx) => (
             <FadeUp key={project.id} delay={idx * 0.1}>
-              <article className="overflow-hidden rounded-[2rem] border border-white/15 bg-[#0d0d0d] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.8)] hover:border-white/30 transition-all duration-300">
+              <article className="group overflow-hidden rounded-[2rem] border border-white/15 bg-[#0d0d0d] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.8)] hover:border-white/30 transition-all duration-300">
                 {/* Header Row */}
                 <div className="flex flex-col gap-4 border-b border-white/10 px-6 py-6 sm:flex-row sm:items-center sm:justify-between md:px-10 bg-[#121214]">
                   <div className="flex items-center gap-4 md:gap-6">
@@ -232,7 +81,7 @@ export const YashProjects: React.FC = () => {
                     </span>
                     <div>
                       <p className="text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-[#8f8f89]">
-                        Project · {project.year}
+                        Venture · {project.year}
                       </p>
                       <h3 className="text-xl md:text-3xl font-black font-heading text-white truncate mt-0.5">
                         {project.title}
@@ -245,18 +94,20 @@ export const YashProjects: React.FC = () => {
                       href={project.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 hover:border-white hover:bg-white hover:text-black transition-all text-xs font-mono font-bold uppercase tracking-wider text-white"
+                      className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-white/20 bg-white/5 hover:bg-white hover:text-black transition-all text-xs font-mono font-bold uppercase tracking-wider text-white shadow-md"
                     >
-                      <span>Live Project</span>
+                      <Globe size={13} />
+                      <span>{project.href.replace('https://', '')}</span>
                       <ArrowUpRight size={14} />
                     </a>
                   </div>
                 </div>
 
                 {/* Card Body */}
-                <div className="p-6 sm:p-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-                  <div className="md:col-span-6 space-y-4 text-left">
-                    <h4 className="text-sm font-mono font-bold text-brand-pink uppercase tracking-wider">
+                <div className="p-6 sm:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                  {/* Left Column Details */}
+                  <div className="lg:col-span-5 space-y-4 text-left">
+                    <h4 className="text-sm md:text-base font-mono font-bold text-transparent bg-clip-text bg-gradient-to-r from-brand-pink to-[#00D4FF] uppercase tracking-wider">
                       {project.tagline}
                     </h4>
                     <p className="text-sm sm:text-base text-gray-300 leading-relaxed font-sans">
@@ -272,16 +123,39 @@ export const YashProjects: React.FC = () => {
                         </span>
                       ))}
                     </div>
-                    <div className="pt-2">
+                    <div className="pt-2 flex items-center gap-2">
+                      <span className="flex h-2 w-2 rounded-full bg-[#00D4FF] animate-ping" />
                       <span className="text-xs font-mono font-bold text-[#00D4FF]">
                         STATUS: {project.metrics}
                       </span>
                     </div>
                   </div>
 
-                  {/* Right Visual Dashboard Preview (Crystal Clear High-DPI) */}
-                  <div className="md:col-span-6 h-60 sm:h-72 rounded-2xl overflow-hidden border border-white/10 bg-[#16161a] relative group">
-                    <ProjectVisualPreview id={project.id} />
+                  {/* Right Column: Platform Screenshot Preview */}
+                  <div className="lg:col-span-7 h-64 sm:h-80 md:h-96 rounded-2xl overflow-hidden border border-white/10 bg-[#16161a] relative shadow-2xl">
+                    <a
+                      href={project.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block w-full h-full relative"
+                    >
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-5 opacity-90 group-hover:opacity-100 transition-opacity">
+                        <div className="flex items-center justify-between w-full">
+                          <span className="font-mono text-xs font-bold text-white uppercase tracking-widest bg-black/60 px-3 py-1 rounded-lg backdrop-blur-md border border-white/10">
+                            {project.subtitle}
+                          </span>
+                          <span className="text-xs font-mono text-[#00D4FF] bg-black/60 px-3 py-1 rounded-lg backdrop-blur-md border border-white/10 flex items-center gap-1">
+                            <span>Open Live</span>
+                            <ArrowUpRight size={12} />
+                          </span>
+                        </div>
+                      </div>
+                    </a>
                   </div>
                 </div>
               </article>
