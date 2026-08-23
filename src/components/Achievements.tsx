@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Trophy, Star, Flame, Code2, Users, Sparkles, ExternalLink } from 'lucide-react';
+import Interactive3DCard from './3d/Interactive3DCard';
 
 interface Achievement {
   title: string;
@@ -20,7 +21,7 @@ const Achievements: React.FC = () => {
       icon: Trophy,
       badgeText: 'Rank #1',
       accentColor: '#F59E0B',
-      glowColor: 'rgba(245, 158, 11, 0.15)'
+      glowColor: 'rgba(245, 158, 11, 0.2)'
     },
     {
       title: 'Published NLP Research',
@@ -28,7 +29,7 @@ const Achievements: React.FC = () => {
       icon: Sparkles,
       badgeText: 'Research Published',
       accentColor: '#7C3AED',
-      glowColor: 'rgba(124, 58, 237, 0.15)',
+      glowColor: 'rgba(124, 58, 237, 0.2)',
       url: 'https://doi.org/10.13140/RG.2.2.25770.27844'
     },
     {
@@ -37,7 +38,7 @@ const Achievements: React.FC = () => {
       icon: Flame,
       badgeText: '96.7% Accuracy',
       accentColor: '#EC4899',
-      glowColor: 'rgba(236, 72, 153, 0.15)'
+      glowColor: 'rgba(236, 72, 153, 0.2)'
     },
     {
       title: 'Campus Ambassador (MyGov & NSS)',
@@ -45,7 +46,7 @@ const Achievements: React.FC = () => {
       icon: Users,
       badgeText: 'Ambassador',
       accentColor: '#06B6D4',
-      glowColor: 'rgba(6, 182, 212, 0.15)'
+      glowColor: 'rgba(6, 182, 212, 0.2)'
     },
     {
       title: 'GirlScript Summer of Code Shortlist',
@@ -53,7 +54,7 @@ const Achievements: React.FC = () => {
       icon: Star,
       badgeText: 'Shortlisted',
       accentColor: '#F97316',
-      glowColor: 'rgba(249, 115, 22, 0.15)'
+      glowColor: 'rgba(249, 115, 22, 0.2)'
     },
     {
       title: 'Active LeetCode Programmer',
@@ -61,7 +62,7 @@ const Achievements: React.FC = () => {
       icon: Code2,
       badgeText: 'Competitive Coding',
       accentColor: '#10B981',
-      glowColor: 'rgba(16, 185, 129, 0.15)',
+      glowColor: 'rgba(16, 185, 129, 0.2)',
       url: 'https://leetcode.com/u/UmarIqbal000/'
     }
   ];
@@ -88,64 +89,58 @@ const Achievements: React.FC = () => {
           const IconComp = item.icon;
 
           return (
-            <motion.div
+            <Interactive3DCard
               key={idx}
-              whileHover={{ y: -6, scale: 1.01 }}
-              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-              className="group relative rounded-2xl overflow-hidden"
+              depth={12}
+              glowColor={item.glowColor}
+              className="h-full rounded-2xl"
             >
-              {/* Card border glow on hover */}
-              <div
-                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                style={{ boxShadow: `inset 0 0 0 1.5px ${item.accentColor}40, 0 0 30px ${item.glowColor}` }}
-              />
-
-              <div className="relative bg-[#131316] border border-[#222226] rounded-2xl p-6 h-full flex flex-col group-hover:border-transparent transition-colors duration-300">
-                
+              <div className="group relative rounded-2xl overflow-hidden bg-[#131316]/90 border border-[#222226] p-6 h-full flex flex-col justify-between transition-colors duration-300">
                 {/* Top accent line */}
                 <div
                   className="absolute top-0 left-6 right-6 h-[2px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   style={{ background: `linear-gradient(90deg, transparent, ${item.accentColor}, transparent)` }}
                 />
 
-                {/* Header: Icon + Badge */}
-                <div className="flex items-center justify-between mb-5">
-                  <div
-                    className="relative w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-300"
-                    style={{ backgroundColor: `${item.accentColor}12`, border: `1px solid ${item.accentColor}25` }}
-                  >
-                    <IconComp size={20} style={{ color: item.accentColor }} />
-                    {/* Icon glow on hover */}
+                <div>
+                  {/* Header: Icon + Badge */}
+                  <div className="flex items-center justify-between mb-5">
                     <div
-                      className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-md"
-                      style={{ backgroundColor: item.glowColor }}
-                    />
+                      className="relative w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-300"
+                      style={{ backgroundColor: `${item.accentColor}12`, border: `1px solid ${item.accentColor}25` }}
+                    >
+                      <IconComp size={20} style={{ color: item.accentColor }} />
+                      <div
+                        className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-md"
+                        style={{ backgroundColor: item.glowColor }}
+                      />
+                    </div>
+
+                    <span
+                      className="text-[9px] font-black font-heading uppercase tracking-[0.15em] px-3 py-1 rounded-full border transition-all duration-300"
+                      style={{
+                        color: item.accentColor,
+                        borderColor: `${item.accentColor}30`,
+                        backgroundColor: `${item.accentColor}08`
+                      }}
+                    >
+                      {item.badgeText}
+                    </span>
                   </div>
 
-                  <span
-                    className="text-[9px] font-black font-heading uppercase tracking-[0.15em] px-3 py-1 rounded-full border transition-all duration-300"
-                    style={{
-                      color: item.accentColor,
-                      borderColor: `${item.accentColor}30`,
-                      backgroundColor: `${item.accentColor}08`
-                    }}
-                  >
-                    {item.badgeText}
-                  </span>
+                  {/* Title */}
+                  <h3 className="text-base md:text-lg font-bold font-heading text-white mb-3 leading-snug group-hover:text-white/95 transition-colors">
+                    {item.title}
+                  </h3>
+
+                  {/* Description */}
+                  <p className="text-gray-400 text-[13px] leading-relaxed mb-5">
+                    {item.description}
+                  </p>
                 </div>
 
-                {/* Title */}
-                <h3 className="text-base md:text-lg font-bold font-heading text-white mb-3 leading-snug group-hover:text-white/95 transition-colors">
-                  {item.title}
-                </h3>
-
-                {/* Description */}
-                <p className="text-gray-400 text-[13px] leading-relaxed mb-5 flex-grow">
-                  {item.description}
-                </p>
-
                 {/* Footer: Link or decorative line */}
-                <div className="mt-auto">
+                <div className="mt-auto pt-2">
                   {item.url ? (
                     <a
                       href={item.url}
@@ -165,7 +160,7 @@ const Achievements: React.FC = () => {
                   )}
                 </div>
               </div>
-            </motion.div>
+            </Interactive3DCard>
           );
         })}
       </div>

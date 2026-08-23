@@ -20,6 +20,7 @@ import Certifications from './components/Certifications';
 import Achievements from './components/Achievements';
 import LinkedIn from './components/LinkedIn';
 import Footer from './components/Footer';
+import ParticleUniverse3D from './components/3d/ParticleUniverse3D';
 
 type TabId = 
   | 'education' 
@@ -78,7 +79,6 @@ function App() {
 
   const handleTabChange = (id: TabId) => {
     setActiveTab(id);
-    // Smoothly scroll to the tab bar container when tab switches, so user doesn't get disoriented if they've scrolled down inside a tab
     const tabElement = document.getElementById('tab-navigation-bar');
     if (tabElement) {
       tabElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -94,6 +94,9 @@ function App() {
       onMouseMove={handleMouseMove}
       className="min-h-screen bg-[#09090B] text-white flex flex-col font-sans selection:bg-brand-violet/10 selection:text-brand-violet relative overflow-x-hidden"
     >
+      {/* 3D WebGL Particle Universe (Full Page Depth Field) */}
+      <ParticleUniverse3D />
+
       {/* Interactive spotlight cursor tracer */}
       <div 
         className="pointer-events-none fixed -z-10 w-[550px] h-[550px] rounded-full opacity-[0.08] blur-[100px] transition-all duration-300 ease-out bg-gradient-to-br from-brand-violet via-brand-pink to-brand-orange hidden md:block"
@@ -109,7 +112,7 @@ function App() {
       {/* Soft overlay gradient to fade out grid pattern near the bottom */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#09090B]/50 to-[#09090B] pointer-events-none -z-20" />
 
-      {/* Persistent Hero Header */}
+      {/* Persistent Hero Header with 3D Experience */}
       <Header onViewProjects={() => handleTabChange('projects')} />
       
       {/* Floating Capsule-shaped Tab Bar */}
@@ -172,7 +175,7 @@ function App() {
       </div>
       
       {/* Content panel beneath tabs */}
-      <main className="max-w-7xl mx-auto px-4 md:px-8 py-10 flex-grow min-h-[500px] w-full">
+      <main className="max-w-7xl mx-auto px-4 md:px-8 py-10 flex-grow min-h-[500px] w-full relative z-10">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}

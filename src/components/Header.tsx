@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Github, Linkedin, Mail, Globe, ArrowRight } from 'lucide-react';
 import { SiLeetcode } from 'react-icons/si';
-import HeroVideoStage from './HeroVideoStage';
+import Hero3DExperience from './Hero3DExperience';
 
 interface HeaderProps {
   onViewProjects: () => void;
@@ -139,14 +139,14 @@ const Header: React.FC<HeaderProps> = ({ onViewProjects }) => {
             </div>
           </motion.div>
 
-          {/* Right Column: Interactive 3D Video Hero Viewport */}
+          {/* Right Column: Interactive 3D WebGL / Hologram Experience */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.9, delay: 0.15 }}
             className="lg:col-span-5 w-full flex justify-center order-1 lg:order-2"
           >
-            <HeroVideoStage />
+            <Hero3DExperience />
           </motion.div>
 
         </div>
