@@ -523,20 +523,6 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
           </motion.div>
         )}
 
-        {/* Bottom Scroll Mouse Animation */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none z-20">
-          <span className="text-[9px] font-mono uppercase tracking-widest text-gray-400">
-            {currentPhase === 3 ? 'Scroll down to explore archive tabs' : 'Scroll down to scrub story'}
-          </span>
-          <motion.div
-            animate={{ y: [0, 5, 0] }}
-            transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }}
-            className="w-4 h-7 rounded-full border border-gray-500 flex items-start justify-center p-1"
-          >
-            <div className="w-1 h-1.5 rounded-full bg-[#00D4FF]" />
-          </motion.div>
-        </div>
-
       </div>
     </div>
   );
