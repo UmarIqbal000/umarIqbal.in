@@ -57,16 +57,17 @@ export const YashHero: React.FC = () => {
             style={{ y: avatarY }}
             className="order-1 justify-self-center md:order-2"
           >
-            <div className="relative group">
+            <div className="relative group animate-float-gentle">
               <img
                 src={siteConfig.avatar}
-                alt="Umar Iqbal 3D Character"
-                className="h-auto w-[65vw] max-w-[340px] md:w-[23vw] object-contain transition-transform duration-500 group-hover:scale-105"
+                alt="Umar Iqbal 3D Avatar"
+                className="h-auto w-[65vw] max-w-[320px] md:w-[21vw] object-contain transition-transform duration-500 group-hover:scale-105"
                 style={{
+                  transform: 'rotate(4deg)',
                   filter:
-                    'drop-shadow(0 0 45px rgba(0, 212, 255, 0.4)) drop-shadow(0 20px 40px rgba(0,0,0,0.8))',
-                  maskImage: 'radial-gradient(ellipse 70% 85% at 50% 50%, black 55%, transparent 95%)',
-                  WebkitMaskImage: 'radial-gradient(ellipse 70% 85% at 50% 50%, black 55%, transparent 95%)',
+                    'drop-shadow(0 0 50px rgba(168,85,247,0.45)) drop-shadow(0 0 25px rgba(0,212,255,0.4)) drop-shadow(0 30px 40px rgba(0,0,0,0.8))',
+                  maskImage: 'radial-gradient(circle at 50% 50%, black 65%, transparent 98%)',
+                  WebkitMaskImage: 'radial-gradient(circle at 50% 50%, black 65%, transparent 98%)',
                 }}
               />
             </div>

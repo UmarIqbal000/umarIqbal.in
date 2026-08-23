@@ -8,7 +8,7 @@ export const siteConfig = {
   email: "umariq.cse@gmail.com",
   phone: "+91 7906732247",
   url: "https://umariqbal.in",
-  avatar: "/avatar_3d.jpg",
+  avatar: "/head.png",
   resume: "#contact",
   socials: {
     github: "https://github.com/UmarIqbal000",

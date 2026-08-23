@@ -36,12 +36,17 @@ export const YashNav: React.FC = () => {
         }`}
       >
         <nav className="flex items-center justify-between px-6 py-5 md:px-16 max-w-7xl mx-auto">
-          {/* Brand Monogram */}
+          {/* Brand Monogram & Avatar */}
           <a
             href="#home"
-            className="text-xs font-mono font-black tracking-widest text-white hover:text-[#00D4FF] transition-colors"
+            className="flex items-center gap-3 group"
           >
-            UMAR.IQBAL // <span className="text-[#00D4FF]">AI</span>
+            <div className="w-8 h-8 rounded-full overflow-hidden border border-white/20 group-hover:border-[#00D4FF] transition-all bg-[#141416] flex-shrink-0 shadow-[0_0_12px_rgba(0,212,255,0.3)]">
+              <img src="/head.png" alt="Umar Iqbal" className="w-full h-full object-cover" />
+            </div>
+            <span className="text-xs font-mono font-black tracking-widest text-white group-hover:text-[#00D4FF] transition-colors">
+              UMAR.IQBAL // <span className="text-[#00D4FF]">AI</span>
+            </span>
           </a>
 
           {/* Navigation Links */}
