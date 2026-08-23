@@ -54,6 +54,18 @@ export const YashStyleScroller: React.FC<YashStyleScrollerProps> = ({
   });
 
   // -------------------------------------------------------------
+  // PRELOAD & WARM UP VIDEOS
+  // -------------------------------------------------------------
+  useEffect(() => {
+    [dollyVideoRef, orbitVideoRef, walkVideoRef, idleVideoRef].forEach((ref) => {
+      if (ref.current) {
+        ref.current.load();
+        ref.current.play().then(() => ref.current?.pause()).catch(() => {});
+      }
+    });
+  }, []);
+
+  // -------------------------------------------------------------
   // THREE.JS 3D WEBGL CYBER SCENE (Hologram Rings + Dust Grid)
   // -------------------------------------------------------------
   useEffect(() => {
