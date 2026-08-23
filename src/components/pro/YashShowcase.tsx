@@ -1,37 +1,47 @@
 import React from 'react';
-import { marqueeSkills, projects } from '../../lib/data';
+import { marqueeSkills, showcaseCerts } from '../../lib/data';
 import { FadeUp } from './YashScrollFx';
+import { Award } from 'lucide-react';
 
 function GalleryRow({
-  images,
+  items,
   reverse = false,
   duration,
 }: {
-  images: { src: string; alt: string; title: string }[];
+  items: { src: string; title: string; issuer: string }[];
   reverse?: boolean;
   duration: string;
 }) {
-  const doubled = [...images, ...images, ...images];
+  const doubled = [...items, ...items, ...items];
   return (
     <div className="flex overflow-hidden">
       <div
-        className={`flex w-max shrink-0 gap-4 pr-4 ${reverse ? 'animate-marquee-reverse' : 'animate-marquee'}`}
+        className={`flex w-max shrink-0 gap-5 pr-5 ${reverse ? 'animate-marquee-reverse' : 'animate-marquee'}`}
         style={{ animationDuration: duration }}
       >
         {doubled.map((item, i) => (
           <div
             key={`${item.src}-${i}`}
-            className="group relative h-40 w-64 md:h-52 md:w-[22rem] rounded-2xl border border-white/10 bg-[#141416] overflow-hidden flex-shrink-0"
+            className="group relative h-48 w-80 md:h-60 md:w-[26rem] rounded-2xl border border-white/10 bg-[#141416] overflow-hidden flex-shrink-0 shadow-lg hover:border-[#00D4FF]/50 transition-all duration-300"
           >
+            {/* Certificate Snapshot */}
             <img
               src={item.src}
-              alt={item.alt}
+              alt={item.title}
               className="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-4">
-              <span className="font-mono text-xs font-bold text-white uppercase tracking-wider">
+
+            {/* Dark Gradient Overlay with Text */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex flex-col justify-end p-4 sm:p-5">
+              <div className="flex items-center gap-1.5 text-[#00D4FF] mb-1">
+                <Award size={13} />
+                <span className="font-mono text-[10px] font-bold uppercase tracking-wider">
+                  {item.issuer}
+                </span>
+              </div>
+              <h4 className="font-heading font-black text-sm sm:text-base text-white truncate">
                 {item.title}
-              </span>
+              </h4>
             </div>
           </div>
         ))}
@@ -41,9 +51,8 @@ function GalleryRow({
 }
 
 export const YashShowcase: React.FC = () => {
-  const shots = projects.map((p) => ({ src: p.image, alt: p.title, title: p.title }));
-  const rowA = shots;
-  const rowB = [...shots.slice(2), ...shots.slice(0, 2)];
+  const rowA = showcaseCerts.slice(0, 5);
+  const rowB = showcaseCerts.slice(5);
 
   return (
     <section className="overflow-hidden py-16 md:py-24 bg-[#0a0a0a]">
@@ -66,10 +75,15 @@ export const YashShowcase: React.FC = () => {
         </div>
       </FadeUp>
 
-      {/* Dual Counter-Scrolling Work Showcase Rows */}
-      <FadeUp delay={0.15} className="mt-14 space-y-4">
-        <GalleryRow images={rowA} duration="35s" />
-        <GalleryRow images={rowB} reverse duration="42s" />
+      {/* Dual Counter-Scrolling Verified Certificates Gallery */}
+      <FadeUp delay={0.15} className="mt-14 space-y-5">
+        <div className="max-w-6xl mx-auto px-6 mb-2">
+          <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#8f8f89]">
+            // VERIFIED INDUSTRY CERTIFICATIONS
+          </span>
+        </div>
+        <GalleryRow items={rowA} duration="38s" />
+        <GalleryRow items={rowB} reverse duration="45s" />
       </FadeUp>
     </section>
   );

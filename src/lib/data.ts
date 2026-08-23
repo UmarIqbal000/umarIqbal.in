@@ -52,6 +52,19 @@ export const marqueeSkills = [
   "Google Cloud #1", "Three.js", "Tailwind CSS", "Supabase", "Firebase", "Node.js", "Python",
 ];
 
+export const showcaseCerts = [
+  { src: "/Screenshot 2025-11-25 174050.png", title: "AWS Cloud Foundations", issuer: "Amazon Web Services" },
+  { src: "/Screenshot 2025-11-25 174110.png", title: "CS50's AI with Python", issuer: "Harvard University" },
+  { src: "/Screenshot 2025-11-25 174151.png", title: "Cloud Computing", issuer: "Infosys Springboard" },
+  { src: "/Screenshot 2025-11-25 174236.png", title: "GDG Solution Challenge", issuer: "Google Developer Groups" },
+  { src: "/Screenshot 2025-11-25 174316.png", title: "Bring AI to Work", issuer: "Google Workspace" },
+  { src: "/Screenshot 2025-11-25 174336.png", title: "Aspire Leaders Program", issuer: "Aspire Institute" },
+  { src: "/Screenshot 2025-11-25 174433.png", title: "Python Programming", issuer: "Red Hat" },
+  { src: "/Screenshot 2025-11-25 174656.png", title: "CS50x Computer Science", issuer: "Harvard University" },
+  { src: "/Screenshot 2025-11-25 174528.png", title: "Kaizen'25 Ambassador", issuer: "IIT Delhi" },
+  { src: "/Screenshot 2025-11-25 174821.png", title: "Data Visualisation", issuer: "Tata / Forage" },
+];
+
 export const projects = [
   {
     index: "01",
