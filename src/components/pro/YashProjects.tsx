@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { projects } from '../../lib/data';
 import { FadeUp } from './YashScrollFx';
-import ScrollStack, { ScrollStackItem } from '../reactbits/ScrollStack';
+import ScrollStack, { ScrollStackItem } from './ScrollStack';
 import { ArrowUpRight, Cpu, ShoppingBag, FileText, Sun, Sparkles, Activity, CheckCircle2, Zap } from 'lucide-react';
 
 function ArchiveCta() {
