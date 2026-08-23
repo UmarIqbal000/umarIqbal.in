@@ -2,8 +2,7 @@ import React, { useRef } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { projects } from '../../lib/data';
 import { FadeUp } from './YashScrollFx';
-import ScrollStack, { ScrollStackItem } from './ScrollStack';
-import { ArrowUpRight, Cpu, ShoppingBag, FileText, Sun, Sparkles, Activity, CheckCircle2, Zap } from 'lucide-react';
+import { ArrowUpRight, Cpu, ShoppingBag, FileText, Sun, Sparkles, Activity, Zap } from 'lucide-react';
 
 function ArchiveCta() {
   const ref = useRef<HTMLDivElement>(null);
@@ -220,84 +219,75 @@ export const YashProjects: React.FC = () => {
           </h2>
         </FadeUp>
 
-        {/* React Bits <ScrollStack /> Component */}
-        <ScrollStack
-          useWindowScroll={true}
-          itemDistance={80}
-          itemScale={0.02}
-          itemStackDistance={30}
-          stackPosition="15%"
-          scaleEndPosition="8%"
-          baseScale={0.95}
-        >
-          {projects.map((project) => (
-            <ScrollStackItem
-              key={project.id}
-              itemClassName="border border-white/15 bg-[#0d0d0d] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.9)] !p-0 overflow-hidden"
-            >
-              {/* Header Row */}
-              <div className="flex flex-col gap-4 border-b border-white/10 px-6 py-6 sm:flex-row sm:items-center sm:justify-between md:px-10 bg-[#121214]">
-                <div className="flex items-center gap-4 md:gap-6">
-                  <span className="font-black text-4xl md:text-6xl text-white font-heading leading-none">
-                    {project.index}
-                  </span>
-                  <div>
-                    <p className="text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-[#8f8f89]">
-                      Project · {project.year}
-                    </p>
-                    <h3 className="text-xl md:text-3xl font-black font-heading text-white truncate mt-0.5">
-                      {project.title}
-                    </h3>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3">
-                  <a
-                    href={project.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 hover:border-white hover:bg-white hover:text-black transition-all text-xs font-mono font-bold uppercase tracking-wider text-white"
-                  >
-                    <span>Live Project</span>
-                    <ArrowUpRight size={14} />
-                  </a>
-                </div>
-              </div>
-
-              {/* Card Body */}
-              <div className="p-6 sm:p-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-                <div className="md:col-span-6 space-y-4 text-left">
-                  <h4 className="text-sm font-mono font-bold text-brand-pink uppercase tracking-wider">
-                    {project.tagline}
-                  </h4>
-                  <p className="text-sm sm:text-base text-gray-300 leading-relaxed font-sans">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2 pt-2">
-                    {(project.stack || []).map((t) => (
-                      <span
-                        key={t}
-                        className="px-3 py-1 rounded-lg text-xs font-mono bg-[#1a1a1f] text-gray-300 border border-white/5"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="pt-2">
-                    <span className="text-xs font-mono font-bold text-[#00D4FF]">
-                      STATUS: {project.metrics}
+        {/* Clean Standard Project Cards List (No Stacking / No Scroll Lock) */}
+        <div className="space-y-8 md:space-y-10">
+          {projects.map((project, idx) => (
+            <FadeUp key={project.id} delay={idx * 0.1}>
+              <article className="overflow-hidden rounded-[2rem] border border-white/15 bg-[#0d0d0d] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.8)] hover:border-white/30 transition-all duration-300">
+                {/* Header Row */}
+                <div className="flex flex-col gap-4 border-b border-white/10 px-6 py-6 sm:flex-row sm:items-center sm:justify-between md:px-10 bg-[#121214]">
+                  <div className="flex items-center gap-4 md:gap-6">
+                    <span className="font-black text-4xl md:text-6xl text-white font-heading leading-none">
+                      {project.index}
                     </span>
+                    <div>
+                      <p className="text-[11px] font-mono font-bold uppercase tracking-[0.2em] text-[#8f8f89]">
+                        Project · {project.year}
+                      </p>
+                      <h3 className="text-xl md:text-3xl font-black font-heading text-white truncate mt-0.5">
+                        {project.title}
+                      </h3>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <a
+                      href={project.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/20 hover:border-white hover:bg-white hover:text-black transition-all text-xs font-mono font-bold uppercase tracking-wider text-white"
+                    >
+                      <span>Live Project</span>
+                      <ArrowUpRight size={14} />
+                    </a>
                   </div>
                 </div>
 
-                {/* Right Visual Dashboard Preview (Crystal Clear High-DPI) */}
-                <div className="md:col-span-6 h-60 sm:h-72 rounded-2xl overflow-hidden border border-white/10 bg-[#16161a] relative group">
-                  <ProjectVisualPreview id={project.id} />
+                {/* Card Body */}
+                <div className="p-6 sm:p-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                  <div className="md:col-span-6 space-y-4 text-left">
+                    <h4 className="text-sm font-mono font-bold text-brand-pink uppercase tracking-wider">
+                      {project.tagline}
+                    </h4>
+                    <p className="text-sm sm:text-base text-gray-300 leading-relaxed font-sans">
+                      {project.description}
+                    </p>
+                    <div className="flex flex-wrap gap-2 pt-2">
+                      {(project.stack || []).map((t) => (
+                        <span
+                          key={t}
+                          className="px-3 py-1 rounded-lg text-xs font-mono bg-[#1a1a1f] text-gray-300 border border-white/5"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                    <div className="pt-2">
+                      <span className="text-xs font-mono font-bold text-[#00D4FF]">
+                        STATUS: {project.metrics}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Right Visual Dashboard Preview (Crystal Clear High-DPI) */}
+                  <div className="md:col-span-6 h-60 sm:h-72 rounded-2xl overflow-hidden border border-white/10 bg-[#16161a] relative group">
+                    <ProjectVisualPreview id={project.id} />
+                  </div>
                 </div>
-              </div>
-            </ScrollStackItem>
+              </article>
+            </FadeUp>
           ))}
-        </ScrollStack>
+        </div>
 
         {/* Magnetic Archive CTA */}
         <div className="mt-16 text-center">
