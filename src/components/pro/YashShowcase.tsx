@@ -1,10 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence, useMotionValue, useAnimationFrame } from 'framer-motion';
+import React, { useRef, useState } from 'react';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { marqueeSkills, showcaseCerts } from '../../lib/data';
 import { FadeUp } from './YashScrollFx';
-import { Award, X, ExternalLink, ZoomIn, Sparkles } from 'lucide-react';
-
-const CARD_GAP = 20;
+import { Award } from 'lucide-react';
 
 interface CertItem {
   src: string;
@@ -12,129 +10,85 @@ interface CertItem {
   issuer: string;
 }
 
-function InteractiveDraggableRow({
+function CursorDrivenRow({
   items,
-  speed = 35,
   reverse = false,
-  onSelectCert,
+  mouseRatio,
 }: {
   items: CertItem[];
-  speed?: number;
   reverse?: boolean;
-  onSelectCert: (cert: CertItem) => void;
+  mouseRatio: ReturnType<typeof useSpring>;
 }) {
-  const x = useMotionValue(0);
-  const setRef = useRef<HTMLDivElement>(null);
-  const loopWidth = useRef(0);
-  const hovering = useRef(false);
-  const dragging = useRef(false);
-
-  useEffect(() => {
-    const measure = () => {
-      if (setRef.current) loopWidth.current = setRef.current.offsetWidth + CARD_GAP;
-    };
-    measure();
-    window.addEventListener('resize', measure);
-    return () => window.removeEventListener('resize', measure);
-  }, []);
-
-  useAnimationFrame((_, delta) => {
-    const w = loopWidth.current;
-    if (!w) return;
-    let next = x.get();
-    const paused = hovering.current || dragging.current;
-    
-    if (!paused) {
-      const step = (speed * delta) / 1000;
-      next = reverse ? next + step : next - step;
-    }
-
-    if (next <= -w) next += w;
-    if (next >= 0) next -= w;
-
-    x.set(next);
-  });
-
-  const renderCard = (item: CertItem, keyPrefix: string, i: number) => (
-    <div
-      key={`${keyPrefix}-${item.src}-${i}`}
-      onClick={() => onSelectCert(item)}
-      className="group relative h-48 w-80 md:h-60 md:w-[26rem] rounded-2xl border border-white/15 bg-[#141416] overflow-hidden flex-shrink-0 shadow-xl cursor-pointer hover:border-[#00D4FF] hover:scale-[1.02] transition-all duration-300 select-none"
-    >
-      {/* Certificate Snapshot */}
-      <img
-        src={item.src}
-        alt={item.title}
-        draggable={false}
-        className="pointer-events-none h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
-      />
-
-      {/* Dark Gradient Overlay with Text & Zoom Icon */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex flex-col justify-end p-4 sm:p-5 pointer-events-none">
-        <div className="flex items-center justify-between gap-2 mb-1">
-          <div className="flex items-center gap-1.5 text-[#00D4FF]">
-            <Award size={13} />
-            <span className="font-mono text-[10px] font-bold uppercase tracking-wider">
-              {item.issuer}
-            </span>
-          </div>
-          <div className="opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 text-[10px] font-mono text-white/80 bg-white/10 px-2 py-0.5 rounded-full backdrop-blur-sm">
-            <ZoomIn size={10} />
-            <span>CLICK TO VIEW</span>
-          </div>
-        </div>
-        <h4 className="font-heading font-black text-sm sm:text-base text-white truncate">
-          {item.title}
-        </h4>
-      </div>
-    </div>
+  // Move row based on cursor X position
+  const x = useTransform(
+    mouseRatio,
+    [0, 1],
+    reverse ? [-400, 100] : [100, -400]
   );
 
+  const repeated = [...items, ...items, ...items];
+
   return (
-    <div
-      className="overflow-hidden py-2"
-      onMouseEnter={() => (hovering.current = true)}
-      onMouseLeave={() => (hovering.current = false)}
-    >
-      <motion.div
-        drag="x"
-        dragMomentum={false}
-        onDragStart={() => (dragging.current = true)}
-        onDragEnd={() => (dragging.current = false)}
-        style={{ x }}
-        className="flex w-max cursor-grab gap-5 active:cursor-grabbing"
-      >
-        <div ref={setRef} className="flex gap-5">
-          {items.map((item, i) => renderCard(item, 'set1', i))}
-        </div>
-        <div aria-hidden className="flex gap-5">
-          {items.map((item, i) => renderCard(item, 'set2', i))}
-        </div>
-        <div aria-hidden className="flex gap-5">
-          {items.map((item, i) => renderCard(item, 'set3', i))}
-        </div>
+    <div className="overflow-hidden py-3">
+      <motion.div style={{ x }} className="flex w-max gap-5 pr-5 pointer-events-none select-none">
+        {repeated.map((item, i) => (
+          <div
+            key={`${item.src}-${i}`}
+            className="group relative h-48 w-80 md:h-60 md:w-[26rem] rounded-2xl border border-white/15 bg-[#141416] overflow-hidden flex-shrink-0 shadow-xl"
+          >
+            {/* Certificate Snapshot */}
+            <img
+              src={item.src}
+              alt={item.title}
+              draggable={false}
+              className="h-full w-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+            />
+
+            {/* Gradient Overlay with Text */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent flex flex-col justify-end p-4 sm:p-5">
+              <div className="flex items-center gap-1.5 text-[#00D4FF] mb-1">
+                <Award size={13} />
+                <span className="font-mono text-[10px] font-bold uppercase tracking-wider">
+                  {item.issuer}
+                </span>
+              </div>
+              <h4 className="font-heading font-black text-sm sm:text-base text-white truncate">
+                {item.title}
+              </h4>
+            </div>
+          </div>
+        ))}
       </motion.div>
     </div>
   );
 }
 
 export const YashShowcase: React.FC = () => {
-  const [selectedCert, setSelectedCert] = useState<CertItem | null>(null);
+  const containerRef = useRef<HTMLElement>(null);
+  const rawMouseX = useMotionValue(0.5);
+  const smoothMouseX = useSpring(rawMouseX, { stiffness: 60, damping: 20 });
 
   const rowA = showcaseCerts.slice(0, 5);
   const rowB = showcaseCerts.slice(5);
 
-  // Close modal on Escape key
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setSelectedCert(null);
-    };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+    if (!containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+    rawMouseX.set(ratio);
+  };
+
+  const handleMouseLeave = () => {
+    rawMouseX.set(0.5);
+  };
 
   return (
-    <section className="overflow-hidden py-16 md:py-24 bg-[#0a0a0a]">
+    <section
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="overflow-hidden py-16 md:py-24 bg-[#0a0a0a]"
+    >
       {/* Tech Strip Marquee */}
       <FadeUp>
         <div className="flex overflow-hidden border-y border-white/10 py-5">
@@ -154,91 +108,20 @@ export const YashShowcase: React.FC = () => {
         </div>
       </FadeUp>
 
-      {/* Dual Counter-Scrolling Verified Certificates Gallery */}
-      <FadeUp delay={0.15} className="mt-14 space-y-5">
-        <div className="max-w-6xl mx-auto px-6 mb-2 flex items-center justify-between">
+      {/* Dual Cursor-Guided Smooth Scrolling Certificates Gallery */}
+      <FadeUp delay={0.15} className="mt-14 space-y-4">
+        <div className="max-w-6xl mx-auto px-6 mb-2">
           <span className="text-xs font-mono font-bold uppercase tracking-[0.25em] text-[#8f8f89]">
-            // VERIFIED INDUSTRY CERTIFICATIONS (DRAG & CLICK TO VIEW)
-          </span>
-          <span className="hidden sm:inline-flex items-center gap-1 text-[11px] font-mono text-[#00D4FF]">
-            <Sparkles size={12} />
-            <span>INTERACTIVE PREVIEW</span>
+            // VERIFIED INDUSTRY CERTIFICATIONS · MOVE CURSOR TO SCROLL
           </span>
         </div>
 
-        {/* Row 1: Leftward drift + Grab to pan */}
-        <InteractiveDraggableRow items={rowA} speed={38} reverse={false} onSelectCert={setSelectedCert} />
+        {/* Row 1: Smoothly slides based on cursor movement */}
+        <CursorDrivenRow items={rowA} reverse={false} mouseRatio={smoothMouseX} />
 
-        {/* Row 2: Rightward drift + Grab to pan */}
-        <InteractiveDraggableRow items={rowB} speed={38} reverse={true} onSelectCert={setSelectedCert} />
+        {/* Row 2: Counter slides smoothly based on cursor movement */}
+        <CursorDrivenRow items={rowB} reverse={true} mouseRatio={smoothMouseX} />
       </FadeUp>
-
-      {/* Fullscreen Certificate Lightbox Modal */}
-      <AnimatePresence>
-        {selectedCert && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setSelectedCert(null)}
-            className="fixed inset-0 z-[150] flex items-center justify-center p-4 sm:p-8 bg-black/90 backdrop-blur-xl"
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              transition={{ duration: 0.25, ease: [0.65, 0, 0.35, 1] }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative max-w-4xl w-full bg-[#141416] border border-white/20 rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(0,212,255,0.25)] flex flex-col max-h-[90vh]"
-            >
-              {/* Header */}
-              <div className="flex items-center justify-between p-5 border-b border-white/10 bg-[#0e0e11]">
-                <div className="flex items-center gap-2 text-[#00D4FF]">
-                  <Award size={18} />
-                  <span className="font-mono text-xs font-bold uppercase tracking-wider">
-                    {selectedCert.issuer}
-                  </span>
-                </div>
-                <button
-                  onClick={() => setSelectedCert(null)}
-                  className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
-                  title="Close (Esc)"
-                >
-                  <X size={18} />
-                </button>
-              </div>
-
-              {/* Certificate Image View */}
-              <div className="p-4 sm:p-6 overflow-y-auto flex items-center justify-center bg-black/40">
-                <img
-                  src={selectedCert.src}
-                  alt={selectedCert.title}
-                  className="max-h-[65vh] w-auto object-contain rounded-xl border border-white/10 shadow-2xl"
-                />
-              </div>
-
-              {/* Footer */}
-              <div className="p-5 border-t border-white/10 bg-[#0e0e11] flex flex-col sm:flex-row items-center justify-between gap-4">
-                <div>
-                  <h3 className="font-heading font-black text-lg text-white">
-                    {selectedCert.title}
-                  </h3>
-                  <p className="text-xs font-mono text-gray-400">Verified Professional Credential</p>
-                </div>
-                <a
-                  href={selectedCert.src}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#00D4FF] to-brand-violet text-white text-xs font-mono font-bold uppercase tracking-wider hover:scale-105 transition-all shadow-md"
-                >
-                  <span>Open Full Image</span>
-                  <ExternalLink size={14} />
-                </a>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   );
 };
